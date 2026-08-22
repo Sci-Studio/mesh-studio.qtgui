@@ -5,4 +5,5 @@ build*/
 .cache/
 
 # IDE / OS
+.vscode/
 compile_commands.json
