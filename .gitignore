@@ -1,0 +1,8 @@
+# binaries
+build*/
+
+# Cache
+.cache/
+
+# IDE / OS
+compile_commands.json
