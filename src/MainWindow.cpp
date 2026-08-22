@@ -5,8 +5,7 @@
 #include <QMenu>
 #include <QMenuBar>
 
-MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent) {
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setMinimumSize(800, 600);
     setWindowTitle("MeshGenQt");
 

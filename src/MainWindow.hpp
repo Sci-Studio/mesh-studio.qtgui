@@ -5,9 +5,9 @@
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
-public:
+  public:
     explicit MainWindow(QWidget* parent = nullptr);
 
-private slots:
+  private slots:
     void onOpenClicked();
 };
