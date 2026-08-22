@@ -2,8 +2,6 @@
 
 #include <QMainWindow>
 
-class QShowEvent;
-
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
