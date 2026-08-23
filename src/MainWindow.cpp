@@ -5,15 +5,14 @@
 #include <QAction>
 #include <QDebug>
 #include <QFileDialog>
-#include <QMenu>
 #include <QMenuBar>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setMinimumSize(800, 600);
     setWindowTitle("MeshGenQt");
 
-    auto* fileMenu = menuBar()->addMenu("&File");
-    auto* openAction = fileMenu->addAction("&Open");
+    mFileMenu = menuBar()->addMenu("&File");
+    auto* openAction = mFileMenu->addAction("&Open");
     connect(openAction, &QAction::triggered, this, &MainWindow::onOpenClicked);
 }
 

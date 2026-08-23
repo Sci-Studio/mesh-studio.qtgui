@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QMainWindow>
+#include <QMenuBar>
+#include <qmenu.h>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -10,4 +12,7 @@ class MainWindow : public QMainWindow {
 
   private slots:
     void onOpenClicked();
+
+  private:
+    QMenu* mFileMenu;
 };
