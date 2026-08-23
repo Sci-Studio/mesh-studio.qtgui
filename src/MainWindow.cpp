@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setWindowTitle("MeshGenQt");
 
     mViewPort = new ViewPort(this);
+    setCentralWidget(mViewPort);
 
     mFileMenu = menuBar()->addMenu("&File");
     auto* openAction = mFileMenu->addAction("&Open");

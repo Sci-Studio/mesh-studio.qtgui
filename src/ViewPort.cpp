@@ -1,8 +1,6 @@
 #include "ViewPort.hpp"
 
-ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
-    setFixedSize(800, 600);
-}
+ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {}
 
 ViewPort::~ViewPort() {}
 
