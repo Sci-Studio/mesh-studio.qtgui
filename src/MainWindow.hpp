@@ -1,8 +1,9 @@
 #pragma once
 
+#include "ViewPort.hpp"
+
 #include <QMainWindow>
 #include <QMenuBar>
-#include <qmenu.h>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -15,4 +16,5 @@ class MainWindow : public QMainWindow {
 
   private:
     QMenu* mFileMenu;
+    ViewPort* mViewPort;
 };

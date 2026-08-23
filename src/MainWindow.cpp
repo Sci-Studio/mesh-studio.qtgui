@@ -1,4 +1,5 @@
 #include "MainWindow.hpp"
+#include "ViewPort.hpp"
 #include "geometry/Mesh.hpp"
 #include "parser/DxfParser.hpp"
 
@@ -10,6 +11,8 @@
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setMinimumSize(800, 600);
     setWindowTitle("MeshGenQt");
+
+    mViewPort = new ViewPort(this);
 
     mFileMenu = menuBar()->addMenu("&File");
     auto* openAction = mFileMenu->addAction("&Open");
