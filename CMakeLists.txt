@@ -5,6 +5,26 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+include(FetchContent)
+
+FetchContent_Declare(
+    meshgen
+    GIT_REPOSITORY https://github.com/Sci-Studio/mesh-studio.meshgen.git
+    GIT_TAG        0a35f336ae9a09c2560950a3ffee9998802bb252  # current main tip
+)
+
+
+FetchContent_GetProperties(meshgen)
+
+if(NOT meshgen_POPULATED)
+    FetchContent_Populate(meshgen)
+    add_subdirectory(
+        ${meshgen_SOURCE_DIR}
+        ${meshgen_BINARY_DIR}
+        EXCLUDE_FROM_ALL
+    )
+endif()
+
 find_package(Qt6 REQUIRED COMPONENTS
     Widgets)
 
@@ -18,4 +38,5 @@ qt_add_executable(MeshGenQtApp
 
 target_link_libraries(MeshGenQtApp
     PRIVATE 
-        Qt6::Widgets)
+        Qt6::Widgets
+        MeshGen)
