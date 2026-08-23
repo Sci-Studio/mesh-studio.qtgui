@@ -6,8 +6,20 @@ ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
 
 ViewPort::~ViewPort() {}
 
-void ViewPort::initializeGL() {}
+void ViewPort::initializeGL() {
+    initializeOpenGLFunctions();
+
+    glClearColor(mBackground.redF(), mBackground.greenF(), mBackground.blueF(), 1.0f);
+}
 
 void ViewPort::resizeGL(int w, int h) {}
 
-void ViewPort::paintGL() {}
+void ViewPort::paintGL() {
+    glClearColor(mBackground.redF(), mBackground.greenF(), mBackground.blueF(), 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void ViewPort::setBackgroundColor(const QColor& color) {
+    mBackground = color;
+    update();
+}

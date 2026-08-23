@@ -27,6 +27,7 @@ endif()
 
 find_package(Qt6 REQUIRED COMPONENTS
     Widgets
+    OpenGL
     OpenGLWidgets)
 
 qt_standard_project_setup()
@@ -42,5 +43,6 @@ qt_add_executable(MeshGenQtApp
 target_link_libraries(MeshGenQtApp
     PRIVATE 
         Qt6::Widgets
+        Qt6::OpenGL
         Qt6::OpenGLWidgets
         MeshGen)
