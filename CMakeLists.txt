@@ -38,6 +38,16 @@ qt_add_executable(MeshGenQtApp
     src/MainWindow.hpp
     src/ViewPort.cpp
     src/ViewPort.hpp
+    src/renderer/Shader.cpp
+    src/renderer/Shader.hpp
+)
+
+qt_add_resources(MeshGenQtApp shader_resources
+    PREFIX "/"
+    BASE src
+    FILES
+        src/shaders/mesh.vertex
+        src/shaders/mesh.fragment
 )
 
 target_link_libraries(MeshGenQtApp

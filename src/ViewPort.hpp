@@ -1,5 +1,7 @@
 #pragma once
 
+#include "renderer/Shader.hpp"
+
 #include <QColor>
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
@@ -20,4 +22,6 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
 
   private:
     QColor mBackground{QColor::fromRgb(30, 30, 30)};
+
+    Shader mShader;
 };
