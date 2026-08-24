@@ -1,5 +1,6 @@
 #pragma once
 
+#include "geometry/Mesh.hpp"
 #include "renderer/Shader.hpp"
 
 #include <QColor>
@@ -14,6 +15,7 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     ~ViewPort();
 
     void setBackgroundColor(const QColor& color);
+    void setMesh(const geometry::Mesh& mesh);
 
   protected:
     void initializeGL() override;
@@ -22,6 +24,7 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
 
   private:
     QColor mBackground{QColor::fromRgb(30, 30, 30)};
+    geometry::Mesh mMesh;
 
     Shader mShader;
 };

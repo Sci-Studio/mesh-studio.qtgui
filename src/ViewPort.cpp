@@ -26,3 +26,10 @@ void ViewPort::setBackgroundColor(const QColor& color) {
     mBackground = color;
     update();
 }
+
+void ViewPort::setMesh(const geometry::Mesh& mesh) {
+    mMesh = mesh;
+    qDebug() << "ViewPort mesh updated. points:" << mMesh.points.size()
+             << "constraints:" << mMesh.constraints.size();
+    update();
+}
