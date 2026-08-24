@@ -19,7 +19,8 @@ bool Shader::loadFromFiles(const QString& vertexPath, const QString& fragmentPat
     }
 
     if (fragmentPath.isEmpty()) {
-        return true;
+        qWarning() << "Fragment shader path is empty.";
+        return false;
     }
 
     const QString fragmentSource = parseShaderSource(fragmentPath);

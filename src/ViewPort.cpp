@@ -10,8 +10,8 @@ void ViewPort::initializeGL() {
 
     glClearColor(mBackground.redF(), mBackground.greenF(), mBackground.blueF(), 1.0f);
 
-    if (!mShader.loadFromFiles(":/shaders/mesh.vertex")) {
-        qWarning() << "Unable to load mesh vertex shader.";
+    if (!mShader.loadFromFiles(":/shaders/mesh.vertex", ":/shaders/mesh.fragment")) {
+        qWarning() << "Unable to load mesh shaders.";
     }
 }
 
