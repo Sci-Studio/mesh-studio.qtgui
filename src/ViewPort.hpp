@@ -1,6 +1,7 @@
 #pragma once
 
 #include "geometry/Mesh.hpp"
+#include "renderer/MeshRenderer.hpp"
 #include "renderer/Shader.hpp"
 
 #include <QColor>
@@ -27,4 +28,5 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     geometry::Mesh mMesh;
 
     Shader mShader;
+    MeshRenderer mMeshRenderer;
 };

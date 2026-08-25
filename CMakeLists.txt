@@ -42,6 +42,8 @@ qt_add_executable(MeshGenQtApp
     src/ViewPort.hpp
     src/renderer/Shader.cpp
     src/renderer/Shader.hpp
+    src/renderer/MeshRenderer.cpp
+    src/renderer/MeshRenderer.hpp
 )
 
 qt_add_resources(MeshGenQtApp shader_resources
