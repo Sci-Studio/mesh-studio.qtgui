@@ -68,50 +68,24 @@ void MeshRenderer::release() {
 void MeshRenderer::uploadMeshVertices(const geometry::Mesh& mesh) {
     mMeshVertices.clear();
 
-    double minX = 0.0;
-    double maxX = 0.0;
-    double minY = 0.0;
-    double maxY = 0.0;
-    bool hasPoint = false;
-
-    for (const auto& point : mesh.points) {
-        if (point.isSymbolic()) {
-            continue;
-        }
-
-        if (!hasPoint) {
-            minX = maxX = point.x;
-            minY = maxY = point.y;
-            hasPoint = true;
-            continue;
-        }
-
-        minX = std::min(minX, point.x);
-        maxX = std::max(maxX, point.x);
-        minY = std::min(minY, point.y);
-        maxY = std::max(maxY, point.y);
-    }
-
-    if (!hasPoint) {
+    const auto realPoints = mesh.pointsReal();
+    if (realPoints.empty()) {
         mPointVbo.bind();
         mPointVbo.allocate(nullptr, 0);
         mPointVbo.release();
         return;
     }
 
-    const double centerX = 0.5 * (minX + maxX);
-    const double centerY = 0.5 * (minY + maxY);
-    const double spanX = maxX - minX;
-    const double spanY = maxY - minY;
+    const auto boundingBox = mesh.getboundingBox();
+    const double centerX = 0.5 * (boundingBox.minX + boundingBox.maxX);
+    const double centerY = 0.5 * (boundingBox.minY + boundingBox.maxY);
+    const double spanX = boundingBox.maxX - boundingBox.minX;
+    const double spanY = boundingBox.maxY - boundingBox.minY;
     const double maxSpan = std::max(spanX, spanY);
     const double scale = maxSpan > 1e-12 ? maxSpan : 1.0;
 
-    mMeshVertices.reserve(mesh.points.size() * 2);
-    for (const auto& point : mesh.points) {
-        if (point.isSymbolic()) {
-            continue;
-        }
-
+    mMeshVertices.reserve(realPoints.size() * 2);
+    for (const auto& point : realPoints) {
         const float normalizedX = static_cast<float>((point.x - centerX) / scale) * 1.8f;
         const float normalizedY = static_cast<float>((point.y - centerY) / scale) * 1.8f;
 

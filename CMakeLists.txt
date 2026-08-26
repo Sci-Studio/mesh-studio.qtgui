@@ -10,7 +10,7 @@ include(FetchContent)
 FetchContent_Declare(
     meshgen
     GIT_REPOSITORY https://github.com/Sci-Studio/mesh-studio.meshgen.git
-    GIT_TAG        0a35f336ae9a09c2560950a3ffee9998802bb252  # current main tip
+    GIT_TAG        6af7faad8c09cbacdd2d95b803aea5e237da73af  # current main tip
 )
 
 
