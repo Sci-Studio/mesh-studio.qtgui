@@ -1,9 +1,8 @@
 #include "MeshRenderer.hpp"
+#include "Shader.hpp"
 #include "geometry/Mesh.hpp"
 
 #include <QDebug>
-#include <QOpenGLContext>
-#include <QOpenGLFunctions>
 #include <algorithm>
 
 MeshRenderer::MeshRenderer() {}
@@ -12,7 +11,7 @@ MeshRenderer::~MeshRenderer() {
     destroy();
 }
 
-bool MeshRenderer::initialize() {
+bool MeshRenderer::initialize(Shader& shader) {
     if (mInitialized) {
         return true;
     }
@@ -29,21 +28,13 @@ bool MeshRenderer::initialize() {
     }
     mPointVbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
 
-    auto* context = QOpenGLContext::currentContext();
-    if (context == nullptr) {
-        qWarning() << "No current OpenGL context when initializing MeshRenderer.";
-        mPointVbo.destroy();
-        mVao.destroy();
-        return false;
-    }
-    QOpenGLFunctions* functions = context->functions();
-
     mVao.bind();
+    shader.bind();
     mPointVbo.bind();
-    functions->glEnableVertexAttribArray(0);
-    functions->glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE,
-                                     2 * static_cast<GLsizei>(sizeof(float)), nullptr);
+    shader.program()->enableAttributeArray(0);
+    shader.program()->setAttributeBuffer(0, GL_FLOAT, 0, 2, 2 * sizeof(float));
     mPointVbo.release();
+    shader.release();
     mVao.release();
 
     mInitialized = true;

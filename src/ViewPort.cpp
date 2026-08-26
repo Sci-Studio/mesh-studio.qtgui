@@ -21,7 +21,7 @@ void ViewPort::initializeGL() {
         qWarning() << "Unable to load mesh shaders.";
     }
 
-    if (!mMeshRenderer.initialize()) {
+    if (!mMeshRenderer.initialize(mShader)) {
         qWarning() << "Unable to initialize mesh renderer.";
     }
 }

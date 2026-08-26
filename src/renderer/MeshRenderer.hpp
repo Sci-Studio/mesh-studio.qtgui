@@ -6,11 +6,13 @@
 #include <QOpenGLVertexArrayObject>
 #include <vector>
 
+class Shader;
+
 class MeshRenderer {
   public:
     MeshRenderer();
     ~MeshRenderer();
-    bool initialize();
+    bool initialize(Shader& shader);
     void destroy();
     void draw();
     void release();
