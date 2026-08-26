@@ -40,7 +40,7 @@ void ViewPort::paintGL() {
     mShader.bind();
     mShader.program()->setUniformValue("uColor", QVector3D(0.90f, 0.90f, 0.90f));
 
-    mMeshRenderer.draw(mShader);
+    mMeshRenderer.draw();
 
     mMeshRenderer.release();
     mShader.release();

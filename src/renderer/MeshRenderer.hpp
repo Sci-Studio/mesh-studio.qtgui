@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Shader.hpp"
 #include "geometry/Mesh.hpp"
 
 #include <QOpenGLBuffer>
+#include <QOpenGLVertexArrayObject>
 #include <vector>
 
 class MeshRenderer {
@@ -12,7 +12,7 @@ class MeshRenderer {
     ~MeshRenderer();
     bool initialize();
     void destroy();
-    void draw(Shader& shader);
+    void draw();
     void release();
 
   public:
@@ -21,5 +21,6 @@ class MeshRenderer {
   private:
     bool mInitialized = false;
     std::vector<float> mMeshVertices;
+    QOpenGLVertexArrayObject mVao;
     QOpenGLBuffer mPointVbo{QOpenGLBuffer::VertexBuffer};
 };
