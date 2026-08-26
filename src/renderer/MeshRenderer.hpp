@@ -12,10 +12,10 @@ class MeshRenderer {
     ~MeshRenderer();
     bool initialize();
     void destroy();
-    void draw(const geometry::Mesh& mesh, Shader& shader);
+    void draw(Shader& shader);
     void release();
 
-  public slots:
+  public:
     void uploadMeshVertices(const geometry::Mesh& mesh);
 
   private:

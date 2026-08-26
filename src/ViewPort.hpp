@@ -22,15 +22,13 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     void resizeGL(int w, int h) override;
     void paintGL() override;
 
-  public slots:
+  public:
     void setMesh(const geometry::Mesh& mesh);
-
-  signals:
-    void uploadMesh(const geometry::Mesh& mesh);
 
   private:
     QColor mBackground{QColor::fromRgb(30, 30, 30)};
     geometry::Mesh mMesh;
+    bool mMeshUploadPending = true;
 
     Shader mShader;
     MeshRenderer mMeshRenderer;

@@ -32,7 +32,7 @@ void MeshRenderer::destroy() {
     mInitialized = false;
 }
 
-void MeshRenderer::draw(const geometry::Mesh& mesh, Shader& shader) {
+void MeshRenderer::draw(Shader& shader) {
     if (!mInitialized) {
         return;
     }
