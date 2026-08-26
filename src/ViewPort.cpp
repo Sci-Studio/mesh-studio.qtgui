@@ -2,7 +2,11 @@
 #include <QDebug>
 #include <QVector3D>
 
-ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {}
+ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
+
+    connect(this, &ViewPort::uploadMesh, this,
+            [this]() { mMeshRenderer.uploadMeshVertices(mMesh); });
+}
 
 ViewPort::~ViewPort() {
     makeCurrent();
@@ -49,5 +53,6 @@ void ViewPort::setMesh(const geometry::Mesh& mesh) {
     mMesh = mesh;
     qDebug() << "ViewPort mesh updated. points:" << mMesh.points.size()
              << "constraints:" << mMesh.constraints.size();
+    emit uploadMesh(mesh);
     update();
 }

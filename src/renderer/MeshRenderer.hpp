@@ -1,7 +1,7 @@
 #pragma once
 
-#include "geometry/Mesh.hpp"
 #include "Shader.hpp"
+#include "geometry/Mesh.hpp"
 
 #include <QOpenGLBuffer>
 #include <vector>
@@ -15,9 +15,11 @@ class MeshRenderer {
     void draw(const geometry::Mesh& mesh, Shader& shader);
     void release();
 
+  public slots:
+    void uploadMeshVertices(const geometry::Mesh& mesh);
+
   private:
     bool mInitialized = false;
     std::vector<float> mMeshVertices;
-    void uploadMeshVertices(const geometry::Mesh& mesh);
     QOpenGLBuffer mPointVbo{QOpenGLBuffer::VertexBuffer};
 };

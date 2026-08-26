@@ -19,7 +19,7 @@ bool MeshRenderer::initialize() {
         qWarning() << "Failed to create point vertex buffer.";
         return false;
     }
-    mPointVbo.setUsagePattern(QOpenGLBuffer::DynamicDraw);
+    mPointVbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
     mInitialized = true;
     return true;
 }
@@ -36,8 +36,6 @@ void MeshRenderer::draw(const geometry::Mesh& mesh, Shader& shader) {
     if (!mInitialized) {
         return;
     }
-
-    uploadMeshVertices(mesh);
 
     mPointVbo.bind();
     shader.program()->enableAttributeArray(0);
