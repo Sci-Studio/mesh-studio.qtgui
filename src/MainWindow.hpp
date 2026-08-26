@@ -1,6 +1,10 @@
 #pragma once
 
+#include "MeshPipeline.hpp"
+#include "ViewPort.hpp"
+
 #include <QMainWindow>
+#include <QMenuBar>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -10,4 +14,9 @@ class MainWindow : public QMainWindow {
 
   private slots:
     void onOpenClicked();
+
+  private:
+    QMenu* mFileMenu = nullptr;
+    ViewPort* mViewPort = nullptr;
+    MeshPipeline* mMeshPipeline = nullptr;
 };

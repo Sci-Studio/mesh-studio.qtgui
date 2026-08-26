@@ -26,7 +26,9 @@ if(NOT meshgen_POPULATED)
 endif()
 
 find_package(Qt6 REQUIRED COMPONENTS
-    Widgets)
+    Widgets
+    OpenGL
+    OpenGLWidgets)
 
 qt_standard_project_setup()
 
@@ -34,9 +36,27 @@ qt_add_executable(MeshGenQtApp
     src/Main.cpp
     src/MainWindow.cpp
     src/MainWindow.hpp
+    src/MeshPipeline.cpp
+    src/MeshPipeline.hpp
+    src/ViewPort.cpp
+    src/ViewPort.hpp
+    src/renderer/Shader.cpp
+    src/renderer/Shader.hpp
+    src/renderer/MeshRenderer.cpp
+    src/renderer/MeshRenderer.hpp
+)
+
+qt_add_resources(MeshGenQtApp shader_resources
+    PREFIX "/"
+    BASE src
+    FILES
+        src/shaders/mesh.vertex
+        src/shaders/mesh.fragment
 )
 
 target_link_libraries(MeshGenQtApp
     PRIVATE 
         Qt6::Widgets
+        Qt6::OpenGL
+        Qt6::OpenGLWidgets
         MeshGen)
