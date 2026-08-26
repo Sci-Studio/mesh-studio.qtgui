@@ -15,11 +15,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setCentralWidget(mViewPort);
     mMeshPipeline = new MeshPipeline(this);
 
-    connect(mMeshPipeline, &MeshPipeline::meshUpdated, this, [this]() {
-        const geometry::Mesh& mesh = mMeshPipeline->mesh();
-        mViewPort->setMesh(mesh);
-        qDebug() << "points:" << mesh.points.size() << "constraints:" << mesh.constraints.size();
-    });
+    connect(mMeshPipeline, &MeshPipeline::meshUpdated, this,
+            [this]() { mViewPort->setMesh(mMeshPipeline->mesh()); });
 
     connect(mMeshPipeline, &MeshPipeline::loadFailed, this, [this](const QString& message) {
         QMessageBox::warning(this, "DXF Parsing Error", message);

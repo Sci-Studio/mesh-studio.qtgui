@@ -1,5 +1,4 @@
 #include "MeshRenderer.hpp"
-#include "geometry/Mesh.hpp"
 
 #include <QDebug>
 #include <algorithm>
@@ -10,16 +9,34 @@ MeshRenderer::~MeshRenderer() {
     destroy();
 }
 
-bool MeshRenderer::initialize() {
+bool MeshRenderer::initialize(Shader& shader) {
     if (mInitialized) {
         return true;
     }
 
-    if (!mPointVbo.create()) {
-        qWarning() << "Failed to create point vertex buffer.";
+    if (!mVao.create()) {
+        qWarning() << "Failed to create vertex array object.";
         return false;
     }
-    mPointVbo.setUsagePattern(QOpenGLBuffer::DynamicDraw);
+
+    if (!mPointVbo.create()) {
+        qWarning() << "Failed to create point vertex buffer.";
+        mVao.destroy();
+        return false;
+    }
+    mPointVbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
+
+    mVao.bind();
+    shader.bind();
+    mPointVbo.bind();
+
+    shader.program()->enableAttributeArray(0);
+    shader.program()->setAttributeBuffer(0, GL_FLOAT, 0, 2, 2 * sizeof(float));
+
+    mPointVbo.release();
+    shader.release();
+    mVao.release();
+
     mInitialized = true;
     return true;
 }
@@ -28,24 +45,20 @@ void MeshRenderer::destroy() {
     if (!mInitialized) {
         return;
     }
+    mVao.destroy();
     mPointVbo.destroy();
     mInitialized = false;
 }
 
-void MeshRenderer::draw(const geometry::Mesh& mesh, Shader& shader) {
+void MeshRenderer::draw() {
     if (!mInitialized) {
         return;
     }
 
-    uploadMeshVertices(mesh);
-
-    mPointVbo.bind();
-    shader.program()->enableAttributeArray(0);
-    shader.program()->setAttributeBuffer(0, GL_FLOAT, 0, 2, 2 * sizeof(float));
+    mVao.bind();
     glPointSize(5.0f);
     glDrawArrays(GL_POINTS, 0, static_cast<int>(mMeshVertices.size() / 2));
-
-    shader.program()->disableAttributeArray(0);
+    mVao.release();
 }
 
 void MeshRenderer::release() {

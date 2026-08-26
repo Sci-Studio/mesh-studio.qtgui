@@ -5,7 +5,7 @@
 
 class Shader {
   public:
-    bool loadFromFiles(const QString& vertexPath, const QString& fragmentPath = QString());
+    bool loadFromFiles(const QString& vertexPath, const QString& fragmentPath);
     void bind();
     void release();
     QOpenGLShaderProgram* program();
