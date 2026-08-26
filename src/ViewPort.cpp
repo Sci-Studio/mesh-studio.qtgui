@@ -2,8 +2,7 @@
 #include <QDebug>
 #include <QVector3D>
 
-ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
-}
+ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {}
 
 ViewPort::~ViewPort() {
     makeCurrent();
