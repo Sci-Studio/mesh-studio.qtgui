@@ -31,8 +31,10 @@ bool MeshRenderer::initialize(Shader& shader) {
     mVao.bind();
     shader.bind();
     mPointVbo.bind();
+
     shader.program()->enableAttributeArray(0);
     shader.program()->setAttributeBuffer(0, GL_FLOAT, 0, 2, 2 * sizeof(float));
+
     mPointVbo.release();
     shader.release();
     mVao.release();
