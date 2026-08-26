@@ -1,12 +1,11 @@
 #pragma once
 
+#include "Shader.hpp"
 #include "geometry/Mesh.hpp"
 
 #include <QOpenGLBuffer>
 #include <QOpenGLVertexArrayObject>
 #include <vector>
-
-class Shader;
 
 class MeshRenderer {
   public:

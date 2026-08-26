@@ -1,6 +1,4 @@
 #include "MeshRenderer.hpp"
-#include "Shader.hpp"
-#include "geometry/Mesh.hpp"
 
 #include <QDebug>
 #include <algorithm>
