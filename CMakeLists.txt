@@ -44,6 +44,8 @@ qt_add_executable(MeshGenQtApp
     src/renderer/Shader.hpp
     src/renderer/MeshRenderer.cpp
     src/renderer/MeshRenderer.hpp
+    src/application/MenuBar.cpp
+    src/application/MenuBar.hpp
 )
 
 qt_add_resources(MeshGenQtApp shader_resources

@@ -1,11 +1,13 @@
 #include "MainWindow.hpp"
 #include "ViewPort.hpp"
+#include "application/MenuBar.hpp"
 
 #include <QAction>
 #include <QDebug>
 #include <QFileDialog>
 #include <QMenuBar>
 #include <QMessageBox>
+#include <qobject.h>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setMinimumSize(800, 600);
@@ -22,18 +24,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
         QMessageBox::warning(this, "DXF Parsing Error", message);
     });
 
-    mFileMenu = menuBar()->addMenu("&File");
-    auto* openAction = mFileMenu->addAction("&Open");
-    connect(openAction, &QAction::triggered, this, &MainWindow::onOpenClicked);
-}
-
-void MainWindow::onOpenClicked() {
-    const QString path =
-        QFileDialog::getOpenFileName(this, "Open DXF", QString(), "DXF files (*.dxf)");
-
-    if (path.isEmpty()) {
-        return;
-    }
-
-    mMeshPipeline->loadFromDxf(path);
+    mMenuBar = new MenuBar(this);
+    setMenuBar(mMenuBar);
+    connect(mMenuBar, &MenuBar::openNewFile, this,
+            [this](const QString& path) { mMeshPipeline->loadFromDxf(path); });
 }

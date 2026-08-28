@@ -2,6 +2,7 @@
 
 #include "MeshPipeline.hpp"
 #include "ViewPort.hpp"
+#include "application/MenuBar.hpp"
 
 #include <QMainWindow>
 #include <QMenuBar>
@@ -12,11 +13,8 @@ class MainWindow : public QMainWindow {
   public:
     explicit MainWindow(QWidget* parent = nullptr);
 
-  private slots:
-    void onOpenClicked();
-
   private:
-    QMenu* mFileMenu = nullptr;
+    MenuBar* mMenuBar = nullptr;
     ViewPort* mViewPort = nullptr;
     MeshPipeline* mMeshPipeline = nullptr;
 };
