@@ -5,7 +5,6 @@
 #include "view/MenuBar.hpp"
 
 #include <QMainWindow>
-#include <QMenuBar>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT

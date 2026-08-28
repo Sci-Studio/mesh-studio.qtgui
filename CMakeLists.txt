@@ -48,6 +48,12 @@ qt_add_executable(MeshGenQtApp
     src/view/MenuBar.hpp
     src/view/PreferencesPopup.cpp
     src/view/PreferencesPopup.hpp
+    src/view/FloatingPanel.cpp
+    src/view/FloatingPanel.hpp
+    src/view/ToolBox.cpp
+    src/view/ToolBox.hpp
+    src/utils/Theme.cpp
+    src/utils/Theme.hpp
 )
 
 qt_add_resources(MeshGenQtApp shader_resources
@@ -58,6 +64,12 @@ qt_add_resources(MeshGenQtApp shader_resources
         src/shaders/mesh.fragment
         src/styles/tokens.qss
         src/styles/app.qss
+        src/styles/ToolBox.qss
+        src/styles/FloatingPanel.qss
+        src/assets/ui/top.png
+        src/assets/ui/iso.png
+        src/assets/ui/triangulate.png
+        src/assets/ui/file-doc.svg
 )
 
 target_link_libraries(MeshGenQtApp

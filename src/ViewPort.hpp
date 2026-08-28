@@ -3,6 +3,8 @@
 #include "geometry/Mesh.hpp"
 #include "renderer/MeshRenderer.hpp"
 #include "renderer/Shader.hpp"
+#include "view/FloatingPanel.hpp"
+#include "view/ToolBox.hpp"
 
 #include <QColor>
 #include <QOpenGLFunctions>
@@ -16,6 +18,7 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     ~ViewPort();
 
     void setBackgroundColor(const QColor& color);
+    void setCurrentFileName(const QString& fileName);
 
   protected:
     void initializeGL() override;
@@ -32,4 +35,6 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
 
     Shader mShader;
     MeshRenderer mMeshRenderer;
+    FloatingPanel* mFloatingConfigPanel = nullptr;
+    ToolBox* mToolBox = nullptr;
 };

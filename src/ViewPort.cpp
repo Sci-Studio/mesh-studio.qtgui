@@ -1,8 +1,13 @@
 #include "ViewPort.hpp"
+#include "view/ToolBox.hpp"
+
 #include <QDebug>
 #include <QVector3D>
 
-ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {}
+ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
+    mFloatingConfigPanel = new FloatingPanel(this);
+    mToolBox = new ToolBox(this);
+}
 
 ViewPort::~ViewPort() {
     makeCurrent();
@@ -25,7 +30,20 @@ void ViewPort::initializeGL() {
     }
 }
 
-void ViewPort::resizeGL(int w, int h) {}
+void ViewPort::resizeGL(int w, int h) {
+    constexpr int marginToolBox = 24;
+    constexpr int marginFloatingPanel = 20;
+
+    if (!mToolBox) {
+        return;
+    };
+
+    const int xToolBox = w - marginToolBox - mToolBox->width();
+    const int yToolBox = marginToolBox;
+
+    mFloatingConfigPanel->move(marginFloatingPanel, marginFloatingPanel);
+    mToolBox->move(std::max(0, xToolBox), std::max(0, yToolBox));
+}
 
 void ViewPort::paintGL() {
     glClearColor(mBackground.redF(), mBackground.greenF(), mBackground.blueF(), 1.0f);
@@ -48,6 +66,14 @@ void ViewPort::paintGL() {
 void ViewPort::setBackgroundColor(const QColor& color) {
     mBackground = color;
     update();
+}
+
+void ViewPort::setCurrentFileName(const QString& fileName) {
+    if (mFloatingConfigPanel == nullptr) {
+        return;
+    }
+
+    mFloatingConfigPanel->setFileName(fileName);
 }
 
 void ViewPort::setMesh(const geometry::Mesh& mesh) {

@@ -2,11 +2,8 @@
 #include "ViewPort.hpp"
 
 #include <QAction>
-#include <QDebug>
-#include <QFileDialog>
-#include <QMenuBar>
+#include <QFileInfo>
 #include <QMessageBox>
-#include <qobject.h>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setMinimumSize(800, 600);
@@ -25,6 +22,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
     mMenuBar = new MenuBar(this);
     setMenuBar(mMenuBar);
-    connect(mMenuBar, &MenuBar::openNewFile, this,
-            [this](const QString& path) { mMeshPipeline->loadFromDxf(path); });
+    connect(mMenuBar, &MenuBar::openNewFile, this, [this](const QString& path) {
+        mViewPort->setCurrentFileName(QFileInfo(path).fileName());
+        mMeshPipeline->loadFromDxf(path);
+    });
 }

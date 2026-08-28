@@ -1,0 +1,15 @@
+QFrame#toolbox {
+    background-color: rgba(26, 28, 28, 230);
+    border: 1px solid rgba(0, 0, 0, 255);
+    border-radius: 65px;
+}
+
+QFrame#toolbox QPushButton {
+    border: 0;
+    background: transparent;
+}
+
+QFrame#toolbox QPushButton:hover {
+    background-color: rgba(58, 134, 255, 45);
+    border-radius: 22px;
+}
