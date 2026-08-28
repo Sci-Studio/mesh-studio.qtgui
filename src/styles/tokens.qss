@@ -1,0 +1,43 @@
+/*
+ * Stitch Design Tokens (Technical Precision)
+ * Qt stylesheets do not support CSS variables, so tokens are documented here
+ * and copied as concrete values in app.qss.
+ */
+
+/*
+ * Core Surfaces
+ * background: #121414
+ * surface: #121414
+ * surface-container: #1e2020
+ * surface-container-high: #282a2b
+ * surface-container-highest: #333535
+ */
+
+/*
+ * Text + Borders
+ * on-surface: #e2e2e2
+ * on-surface-variant: #c4c7c7
+ * outline: #8e9192
+ * outline-variant: #444748
+ */
+
+/*
+ * Accent + Semantic
+ * primary: #3a86ff
+ * error: #ffb4ab
+ */
+
+/*
+ * Typography
+ * ui font: Inter, "Segoe UI", sans-serif
+ * mono font: "JetBrains Mono", "DejaVu Sans Mono", monospace
+ */
+
+/*
+ * Sizing
+ * grid unit: 4px
+ * toolbar height: 32px
+ * control height: 24px
+ * panel radius: 4px
+ * control radius: 2px
+ */

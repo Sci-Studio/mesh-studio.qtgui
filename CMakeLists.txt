@@ -56,6 +56,8 @@ qt_add_resources(MeshGenQtApp shader_resources
     FILES
         src/shaders/mesh.vertex
         src/shaders/mesh.fragment
+        src/styles/tokens.qss
+        src/styles/app.qss
 )
 
 target_link_libraries(MeshGenQtApp
