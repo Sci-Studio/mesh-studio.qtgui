@@ -2,7 +2,7 @@
 
 #include "MeshPipeline.hpp"
 #include "ViewPort.hpp"
-#include "application/MenuBar.hpp"
+#include "view/MenuBar.hpp"
 
 #include <QMainWindow>
 #include <QMenuBar>

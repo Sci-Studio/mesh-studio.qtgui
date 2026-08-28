@@ -1,6 +1,5 @@
 #include "MainWindow.hpp"
 #include "ViewPort.hpp"
-#include "application/MenuBar.hpp"
 
 #include <QAction>
 #include <QDebug>
