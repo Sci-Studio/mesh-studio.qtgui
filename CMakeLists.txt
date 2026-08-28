@@ -65,6 +65,7 @@ qt_add_resources(MeshGenQtApp shader_resources
         src/styles/tokens.qss
         src/styles/app.qss
         src/styles/ToolBox.qss
+        src/styles/FloatingPanel.qss
         src/assets/ui/top.png
         src/assets/ui/iso.png
         src/assets/ui/triangulate.png

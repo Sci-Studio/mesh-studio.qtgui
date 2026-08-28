@@ -156,39 +156,3 @@ QStatusBar {
     color: #c4c7c7;
     border-top: 1px solid #444748;
 }
-
-QFrame#leftConfigPanel {
-    background-color: rgba(26, 28, 28, 204);
-    border: 1px solid rgba(68, 71, 72, 128);
-    border-radius: 8px;
-}
-
-QFrame#leftConfigPanel QLabel#titleLabel {
-    color: #e2e2e2;
-    font-family: "JetBrains Mono";
-    font-size: 12px;
-    font-weight: 700;
-}
-
-QFrame#leftConfigPanel QLabel#subtitleLabel {
-    color: #c4c7c7;
-    font-family: "Inter";
-    font-size: 11px;
-}
-
-QFrame#leftConfigPanel QTreeWidget {
-    background-color: rgba(255, 255, 255, 0);
-    border: 0;
-    color: #c4c7c7;
-    outline: 0;
-    font-size: 11px;
-}
-
-QFrame#leftConfigPanel QTreeWidget::item {
-    padding: 2px 0;
-}
-
-QFrame#leftConfigPanel QHeaderView::section {
-    background: transparent;
-    border: 0;
-}

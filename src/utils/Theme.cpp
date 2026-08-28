@@ -15,7 +15,7 @@ QString Theme::loadStyleSheet(const QString& resourcePath) {
 
 void Theme::apply(QApplication& app) {
     const QStringList styleFiles = {":/styles/tokens.qss", ":/styles/app.qss",
-                                    ":/styles/ToolBox.qss"};
+                                    ":/styles/ToolBox.qss", ":/styles/FloatingPanel.qss"};
 
     QString styleSheet;
 
