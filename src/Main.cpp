@@ -5,24 +5,12 @@
 #include <QTimer>
 
 #include "MainWindow.hpp"
-
-QString readResourceText(const QString& resourcePath) {
-    QFile file(resourcePath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return {};
-    }
-    QTextStream stream(&file);
-    return stream.readAll();
-}
+#include "utils/Theme.hpp"
 
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
 
-    const QString styleSheet =
-        readResourceText(":/styles/tokens.qss") + "\n" + readResourceText(":/styles/app.qss");
-    if (!styleSheet.isEmpty()) {
-        app.setStyleSheet(styleSheet);
-    }
+    Theme::apply(app);
 
     MainWindow window;
     window.show();

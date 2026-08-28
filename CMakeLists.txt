@@ -52,6 +52,8 @@ qt_add_executable(MeshGenQtApp
     src/view/FloatingPanel.hpp
     src/view/ToolBox.cpp
     src/view/ToolBox.hpp
+    src/utils/Theme.cpp
+    src/utils/Theme.hpp
 )
 
 qt_add_resources(MeshGenQtApp shader_resources
