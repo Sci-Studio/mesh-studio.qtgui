@@ -1,7 +1,4 @@
 #include <QApplication>
-#include <QFile>
-#include <QIODevice>
-#include <QTextStream>
 #include <QTimer>
 
 #include "MainWindow.hpp"
