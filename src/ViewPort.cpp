@@ -1,4 +1,5 @@
 #include "ViewPort.hpp"
+#include "view/ToolBox.hpp"
 
 #include <QDebug>
 #include <QVector3D>
@@ -9,6 +10,10 @@ ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
     mFloatingConfigPanel->resize(200, 400);
     mFloatingConfigPanel->show();
     mFloatingConfigPanel->raise();
+
+    mToolBox = new ToolBox(this);
+    mToolBox->move(800, 100);
+    mToolBox->show();
 }
 
 ViewPort::~ViewPort() {
