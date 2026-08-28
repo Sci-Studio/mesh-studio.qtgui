@@ -17,6 +17,7 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     ~ViewPort();
 
     void setBackgroundColor(const QColor& color);
+    void setCurrentFileName(const QString& fileName);
 
   protected:
     void initializeGL() override;

@@ -57,6 +57,14 @@ void ViewPort::setBackgroundColor(const QColor& color) {
     update();
 }
 
+void ViewPort::setCurrentFileName(const QString& fileName) {
+    if (mFloatingConfigPanel == nullptr) {
+        return;
+    }
+
+    mFloatingConfigPanel->setFileName(fileName);
+}
+
 void ViewPort::setMesh(const geometry::Mesh& mesh) {
     mMesh = mesh;
     qDebug() << "ViewPort mesh updated. points:" << mMesh.points().size()

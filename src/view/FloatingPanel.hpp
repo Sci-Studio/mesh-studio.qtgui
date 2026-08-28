@@ -8,6 +8,7 @@ class FloatingPanel : public QFrame {
 
   public:
     explicit FloatingPanel(QWidget* parent = nullptr);
+    void setFileName(const QString& fileName);
 
   private:
     QLabel* mFileNameLabel = nullptr;

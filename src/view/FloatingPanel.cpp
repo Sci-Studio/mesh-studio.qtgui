@@ -43,3 +43,11 @@ FloatingPanel::FloatingPanel(QWidget* parent) : QFrame(parent) {
     leftPanelLayout->addWidget(header);
     leftPanelLayout->addStretch(1);
 }
+
+void FloatingPanel::setFileName(const QString& fileName) {
+    if (mFileNameLabel == nullptr) {
+        return;
+    }
+
+    mFileNameLabel->setText(fileName);
+}
