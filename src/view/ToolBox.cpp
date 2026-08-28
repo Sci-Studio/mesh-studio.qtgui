@@ -6,6 +6,8 @@ ToolBox::ToolBox(QWidget* parent) : QFrame(parent) {
     setObjectName("toolbox");
     setAttribute(Qt::WA_StyledBackground, true);
     setFixedSize(130, 130);
+    raise();
+    show();
 
     mTopViewButton = new QPushButton(this);
     mIsoViewButton = new QPushButton(this);

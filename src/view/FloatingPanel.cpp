@@ -9,6 +9,9 @@
 FloatingPanel::FloatingPanel(QWidget* parent) : QFrame(parent) {
     setObjectName("leftConfigPanel");
     setAttribute(Qt::WA_StyledBackground, true);
+    setFixedSize(200, 400);
+    raise();
+    show();
 
     auto* leftPanelLayout = new QVBoxLayout(this);
     leftPanelLayout->setContentsMargins(0, 0, 0, 0);
