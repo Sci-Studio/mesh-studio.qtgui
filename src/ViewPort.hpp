@@ -3,6 +3,7 @@
 #include "geometry/Mesh.hpp"
 #include "renderer/MeshRenderer.hpp"
 #include "renderer/Shader.hpp"
+#include "view/FloatingPanel.hpp"
 
 #include <QColor>
 #include <QOpenGLFunctions>
@@ -32,4 +33,5 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
 
     Shader mShader;
     MeshRenderer mMeshRenderer;
+    FloatingPanel* mFloatingConfigPanel = nullptr;
 };

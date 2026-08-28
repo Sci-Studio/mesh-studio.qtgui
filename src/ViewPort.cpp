@@ -1,8 +1,15 @@
 #include "ViewPort.hpp"
+
 #include <QDebug>
 #include <QVector3D>
 
-ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {}
+ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
+    mFloatingConfigPanel = new FloatingPanel(this);
+    mFloatingConfigPanel->move(20, 20);
+    mFloatingConfigPanel->resize(200, 400);
+    mFloatingConfigPanel->show();
+    mFloatingConfigPanel->raise();
+}
 
 ViewPort::~ViewPort() {
     makeCurrent();

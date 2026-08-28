@@ -3,10 +3,7 @@
 
 #include <QAction>
 #include <QDebug>
-#include <QFileDialog>
-#include <QMenuBar>
 #include <QMessageBox>
-#include <qobject.h>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setMinimumSize(800, 600);
