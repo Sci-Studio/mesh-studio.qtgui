@@ -44,6 +44,10 @@ qt_add_executable(MeshGenQtApp
     src/renderer/Shader.hpp
     src/renderer/MeshRenderer.cpp
     src/renderer/MeshRenderer.hpp
+    src/view/MenuBar.cpp
+    src/view/MenuBar.hpp
+    src/view/PreferencesPopup.cpp
+    src/view/PreferencesPopup.hpp
 )
 
 qt_add_resources(MeshGenQtApp shader_resources
@@ -52,6 +56,8 @@ qt_add_resources(MeshGenQtApp shader_resources
     FILES
         src/shaders/mesh.vertex
         src/shaders/mesh.fragment
+        src/styles/tokens.qss
+        src/styles/app.qss
 )
 
 target_link_libraries(MeshGenQtApp
