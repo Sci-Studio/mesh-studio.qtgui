@@ -58,6 +58,10 @@ qt_add_resources(MeshGenQtApp shader_resources
         src/shaders/mesh.fragment
         src/styles/tokens.qss
         src/styles/app.qss
+        src/assets/ui/top.png
+        src/assets/ui/iso.png
+        src/assets/ui/triangulate.png
+        src/assets/ui/file-doc.svg
 )
 
 target_link_libraries(MeshGenQtApp
