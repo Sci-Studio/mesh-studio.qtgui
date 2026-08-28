@@ -13,7 +13,9 @@ class MenuBar : public QMenuBar {
 
   private slots:
     void onOpenClicked();
+    void onPreferencesClicked();
 
   private:
     QMenu* mFileMenu = nullptr;
+    QMenu* mEditMenu = nullptr;
 };

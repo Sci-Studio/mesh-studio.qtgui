@@ -1,12 +1,16 @@
 #include "MenuBar.hpp"
 
 #include <QFileDialog>
-#include <qtmetamacros.h>
+#include <QMessageBox>
 
 MenuBar::MenuBar(QWidget* parent) : QMenuBar(parent) {
     mFileMenu = addMenu("&File");
     auto* openAction = mFileMenu->addAction("&Open");
     connect(openAction, &QAction::triggered, this, &MenuBar::onOpenClicked);
+
+    mEditMenu = addMenu("&Edit");
+    auto* preferencesAction = mEditMenu->addAction("&Preferences");
+    connect(preferencesAction, &QAction::triggered, this, &MenuBar::onPreferencesClicked);
 }
 
 void MenuBar::onOpenClicked() {
@@ -18,4 +22,8 @@ void MenuBar::onOpenClicked() {
     }
 
     emit openNewFile(path);
+}
+
+void MenuBar::onPreferencesClicked() {
+    QMessageBox::information(this, "Preferences", "Preferences dialog placeholder.");
 }
