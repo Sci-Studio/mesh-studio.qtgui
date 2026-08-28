@@ -46,6 +46,8 @@ qt_add_executable(MeshGenQtApp
     src/renderer/MeshRenderer.hpp
     src/application/MenuBar.cpp
     src/application/MenuBar.hpp
+    src/application/PreferencesPopup.cpp
+    src/application/PreferencesPopup.hpp
 )
 
 qt_add_resources(MeshGenQtApp shader_resources

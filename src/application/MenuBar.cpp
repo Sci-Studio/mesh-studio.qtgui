@@ -1,7 +1,7 @@
 #include "MenuBar.hpp"
+#include "PreferencesPopup.hpp"
 
 #include <QFileDialog>
-#include <QMessageBox>
 
 MenuBar::MenuBar(QWidget* parent) : QMenuBar(parent) {
     mFileMenu = addMenu("&File");
@@ -25,5 +25,6 @@ void MenuBar::onOpenClicked() {
 }
 
 void MenuBar::onPreferencesClicked() {
-    QMessageBox::information(this, "Preferences", "Preferences dialog placeholder.");
+    PreferencesPopup preferencesPopup(this);
+    preferencesPopup.exec();
 }
