@@ -12,7 +12,6 @@ ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
     mFloatingConfigPanel->raise();
 
     mToolBox = new ToolBox(this);
-    mToolBox->move(800, 100);
     mToolBox->show();
 }
 
@@ -37,7 +36,18 @@ void ViewPort::initializeGL() {
     }
 }
 
-void ViewPort::resizeGL(int w, int h) {}
+void ViewPort::resizeGL(int w, int h) {
+    constexpr int margin = 24;
+
+    if (!mToolBox) {
+        return;
+    };
+
+    const int x = w - margin - mToolBox->width();
+    const int y = margin;
+
+    mToolBox->move(std::max(0, x), std::max(0, y));
+}
 
 void ViewPort::paintGL() {
     glClearColor(mBackground.redF(), mBackground.greenF(), mBackground.blueF(), 1.0f);
