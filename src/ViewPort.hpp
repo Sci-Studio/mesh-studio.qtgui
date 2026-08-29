@@ -37,9 +37,12 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     geometry::Mesh mMesh;
     bool mMeshUploadPending = true;
     QMatrix4x4 mViewMatrix;
+    QMatrix4x4 mProjectionMatrix;
 
     Shader mShader;
     MeshRenderer mMeshRenderer;
     FloatingPanel* mFloatingConfigPanel = nullptr;
     ToolBox* mToolBox = nullptr;
+
+    void setProjectionMatrix();
 };

@@ -32,7 +32,8 @@ void ViewPort::initializeGL() {
         qWarning() << "Unable to initialize mesh renderer.";
     }
 
-    mViewMatrix.setToIdentity();
+    setTopView();
+    setProjectionMatrix();
 }
 
 void ViewPort::resizeGL(int w, int h) {
@@ -48,6 +49,9 @@ void ViewPort::resizeGL(int w, int h) {
 
     mFloatingConfigPanel->move(marginFloatingPanel, marginFloatingPanel);
     mToolBox->move(std::max(0, xToolBox), std::max(0, yToolBox));
+
+    setProjectionMatrix();
+    update();
 }
 
 void ViewPort::paintGL() {
@@ -59,17 +63,7 @@ void ViewPort::paintGL() {
         mMeshUploadPending = false;
     }
 
-    QMatrix4x4 projection;
-
-    const float aspect =
-        height() > 0 ? static_cast<float>(width()) / static_cast<float>(height()) : 1.0f;
-
-    if (aspect >= 1.0f) {
-        projection.ortho(-aspect, aspect, -1.0f, 1.0f, -1.0f, 1.0f);
-    } else {
-        projection.ortho(-1.0f, 1.0f, -1.0f / aspect, 1.0f / aspect, -1.0f, 1.0f);
-    }
-    QMatrix4x4 mvp = projection * mViewMatrix;
+    QMatrix4x4 mvp = mProjectionMatrix * mViewMatrix;
 
     mShader.bind();
     mShader.program()->setUniformValue("uColor", QVector3D(0.90f, 0.90f, 0.90f));
@@ -115,4 +109,16 @@ void ViewPort::setIsoView() {
     mViewMatrix.rotate(-45.0f, QVector3D(0.0f, 0.0f, 1.0f));
     mViewMatrix.rotate(54.7356f, QVector3D(1.0f, 0.0f, 0.0f));
     update();
+}
+
+void ViewPort::setProjectionMatrix() {
+    mProjectionMatrix.setToIdentity();
+    const float aspect =
+        height() > 0 ? static_cast<float>(width()) / static_cast<float>(height()) : 1.0f;
+
+    if (aspect >= 1.0f) {
+        mProjectionMatrix.ortho(-aspect, aspect, -1.0f, 1.0f, -1.0f, 1.0f);
+    } else {
+        mProjectionMatrix.ortho(-1.0f, 1.0f, -1.0f / aspect, 1.0f / aspect, -1.0f, 1.0f);
+    }
 }
