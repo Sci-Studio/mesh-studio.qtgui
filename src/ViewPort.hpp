@@ -28,10 +28,15 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
   public:
     void setMesh(const geometry::Mesh& mesh);
 
+  private slots:
+    void setTopView();
+    void setIsoView();
+
   private:
     QColor mBackground{QColor::fromRgb(30, 30, 30)};
     geometry::Mesh mMesh;
     bool mMeshUploadPending = true;
+    QMatrix4x4 mViewMatrix;
 
     Shader mShader;
     MeshRenderer mMeshRenderer;

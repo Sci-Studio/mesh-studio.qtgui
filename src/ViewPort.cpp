@@ -7,6 +7,9 @@
 ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
     mFloatingConfigPanel = new FloatingPanel(this);
     mToolBox = new ToolBox(this);
+
+    connect(mToolBox, &ToolBox::onTopViewClicked, this, &ViewPort::setTopView);
+    connect(mToolBox, &ToolBox::onIsoViewClicked, this, &ViewPort::setIsoView);
 }
 
 ViewPort::~ViewPort() {
@@ -28,6 +31,8 @@ void ViewPort::initializeGL() {
     if (!mMeshRenderer.initialize(mShader)) {
         qWarning() << "Unable to initialize mesh renderer.";
     }
+
+    mViewMatrix.setToIdentity();
 }
 
 void ViewPort::resizeGL(int w, int h) {
@@ -64,11 +69,12 @@ void ViewPort::paintGL() {
     } else {
         projection.ortho(-1.0f, 1.0f, -1.0f / aspect, 1.0f / aspect, -1.0f, 1.0f);
     }
+    QMatrix4x4 mvp = projection * mViewMatrix;
 
     mShader.bind();
     mShader.program()->setUniformValue("uColor", QVector3D(0.90f, 0.90f, 0.90f));
 
-    mShader.program()->setUniformValue("uProjection", projection);
+    mShader.program()->setUniformValue("uMVP", mvp);
 
     mMeshRenderer.draw();
 
@@ -94,5 +100,19 @@ void ViewPort::setMesh(const geometry::Mesh& mesh) {
     qDebug() << "ViewPort mesh updated. points:" << mMesh.points().size()
              << "constraints:" << mMesh.constraints().size();
     mMeshUploadPending = true;
+    update();
+}
+
+void ViewPort::setTopView() {
+    mViewMatrix.setToIdentity();
+    update();
+}
+
+void ViewPort::setIsoView() {
+    mViewMatrix.setToIdentity();
+    // For a flat XY sketch (z=0), a FreeCAD-like isometric look is best
+    // approximated by in-plane spin + tilt instead of pure X/Y yaw-pitch.
+    mViewMatrix.rotate(-45.0f, QVector3D(0.0f, 0.0f, 1.0f));
+    mViewMatrix.rotate(54.7356f, QVector3D(1.0f, 0.0f, 0.0f));
     update();
 }

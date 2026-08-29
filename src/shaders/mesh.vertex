@@ -1,8 +1,8 @@
 #version 330 core
 
 layout(location = 0) in vec2 vertexPosition;
-uniform mat4 uProjection;
+uniform mat4 uMVP;
 
 void main() {
-    gl_Position = uProjection * vec4(vertexPosition, 0.0, 1.0);
+    gl_Position = uMVP * vec4(vertexPosition, 0.0, 1.0);
 }

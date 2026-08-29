@@ -2,6 +2,7 @@
 
 #include <QFrame>
 #include <QPushButton>
+#include <qtmetamacros.h>
 
 class ToolBox : public QFrame {
     Q_OBJECT
@@ -9,7 +10,7 @@ class ToolBox : public QFrame {
   public:
     explicit ToolBox(QWidget* parent = nullptr);
 
-  private slots:
+  signals:
     void onTopViewClicked();
     void onIsoViewClicked();
     void onTriangulateClicked();
