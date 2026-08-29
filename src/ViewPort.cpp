@@ -54,8 +54,21 @@ void ViewPort::paintGL() {
         mMeshUploadPending = false;
     }
 
+    QMatrix4x4 projection;
+
+    const float aspect =
+        height() > 0 ? static_cast<float>(width()) / static_cast<float>(height()) : 1.0f;
+
+    if (aspect >= 1.0f) {
+        projection.ortho(-aspect, aspect, -1.0f, 1.0f, -1.0f, 1.0f);
+    } else {
+        projection.ortho(-1.0f, 1.0f, -1.0f / aspect, 1.0f / aspect, -1.0f, 1.0f);
+    }
+
     mShader.bind();
     mShader.program()->setUniformValue("uColor", QVector3D(0.90f, 0.90f, 0.90f));
+
+    mShader.program()->setUniformValue("uProjection", projection);
 
     mMeshRenderer.draw();
 
