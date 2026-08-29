@@ -2,7 +2,6 @@
 
 #include <QFrame>
 #include <QPushButton>
-#include <qtmetamacros.h>
 
 class ToolBox : public QFrame {
     Q_OBJECT
