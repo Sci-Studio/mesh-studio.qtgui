@@ -19,6 +19,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     connect(mMeshPipeline, &MeshPipeline::loadFailed, this, [this](const QString& message) {
         QMessageBox::warning(this, "DXF Parsing Error", message);
     });
+    connect(mMeshPipeline, &MeshPipeline::triangulationFailed, this,
+            [this](const QString& message) {
+                QMessageBox::warning(this, "Triangulation Error", message);
+            });
 
     mMenuBar = new MenuBar(this);
     setMenuBar(mMenuBar);
@@ -26,4 +30,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
         mViewPort->setCurrentFileName(QFileInfo(path).fileName());
         mMeshPipeline->loadFromDxf(path);
     });
+    connect(mViewPort, &ViewPort::triangulateRequested, this,
+            [this]() { mMeshPipeline->triangulate(); });
 }

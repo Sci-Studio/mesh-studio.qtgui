@@ -2,6 +2,8 @@
 
 #include <QDebug>
 #include <algorithm>
+#include <array>
+#include <set>
 
 MeshRenderer::MeshRenderer() {}
 
@@ -23,11 +25,18 @@ bool MeshRenderer::initialize(Shader& shader) {
         mVao.destroy();
         return false;
     }
+    if (!mTriangulationVao.create()) {
+        qWarning() << "Failed to create triangulation vertex array object.";
+        mLineVao.destroy();
+        mVao.destroy();
+        return false;
+    }
 
     if (!mPointVbo.create()) {
         qWarning() << "Failed to create point vertex buffer.";
         mVao.destroy();
         mLineVao.destroy();
+        mTriangulationVao.destroy();
         return false;
     }
     if (!mLineVbo.create()) {
@@ -35,10 +44,21 @@ bool MeshRenderer::initialize(Shader& shader) {
         mPointVbo.destroy();
         mVao.destroy();
         mLineVao.destroy();
+        mTriangulationVao.destroy();
+        return false;
+    }
+    if (!mTriangulationVbo.create()) {
+        qWarning() << "Failed to create triangulation vertex buffer.";
+        mLineVbo.destroy();
+        mPointVbo.destroy();
+        mVao.destroy();
+        mLineVao.destroy();
+        mTriangulationVao.destroy();
         return false;
     }
     mPointVbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
     mLineVbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
+    mTriangulationVbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
 
     mVao.bind();
     shader.bind();
@@ -55,7 +75,15 @@ bool MeshRenderer::initialize(Shader& shader) {
     shader.program()->setAttributeBuffer(0, GL_FLOAT, 0, 2, 2 * sizeof(float));
 
     mLineVbo.release();
+
+    mTriangulationVao.bind();
+    mTriangulationVbo.bind();
+    shader.program()->enableAttributeArray(0);
+    shader.program()->setAttributeBuffer(0, GL_FLOAT, 0, 2, 2 * sizeof(float));
+    mTriangulationVbo.release();
+
     shader.release();
+    mTriangulationVao.release();
     mLineVao.release();
     mVao.release();
 
@@ -69,8 +97,10 @@ void MeshRenderer::destroy() {
     }
     mVao.destroy();
     mLineVao.destroy();
+    mTriangulationVao.destroy();
     mPointVbo.destroy();
     mLineVbo.destroy();
+    mTriangulationVbo.destroy();
     mInitialized = false;
 }
 
@@ -84,6 +114,11 @@ void MeshRenderer::draw() {
     glDrawArrays(GL_LINES, 0, static_cast<int>(mConstraintVertices.size() / 2));
     mLineVao.release();
 
+    mTriangulationVao.bind();
+    glLineWidth(1.0f);
+    glDrawArrays(GL_LINES, 0, static_cast<int>(mTriangulationVertices.size() / 2));
+    mTriangulationVao.release();
+
     mVao.bind();
     glPointSize(5.0f);
     glDrawArrays(GL_POINTS, 0, static_cast<int>(mMeshVertices.size() / 2));
@@ -93,11 +128,13 @@ void MeshRenderer::draw() {
 void MeshRenderer::release() {
     mPointVbo.release();
     mLineVbo.release();
+    mTriangulationVbo.release();
 }
 
 void MeshRenderer::uploadMeshVertices(const geometry::Mesh& mesh) {
     mMeshVertices.clear();
     mConstraintVertices.clear();
+    mTriangulationVertices.clear();
 
     const auto realPoints = mesh.pointsReal();
     if (realPoints.empty()) {
@@ -107,6 +144,9 @@ void MeshRenderer::uploadMeshVertices(const geometry::Mesh& mesh) {
         mLineVbo.bind();
         mLineVbo.allocate(nullptr, 0);
         mLineVbo.release();
+        mTriangulationVbo.bind();
+        mTriangulationVbo.allocate(nullptr, 0);
+        mTriangulationVbo.release();
         return;
     }
 
@@ -135,6 +175,7 @@ void MeshRenderer::uploadMeshVertices(const geometry::Mesh& mesh) {
 
     const auto& allPoints = mesh.points();
     const auto& constraints = mesh.constraints();
+    const auto& triangles = mesh.triangles();
     mConstraintVertices.reserve(constraints.size() * 4);
     for (const auto& edge : constraints) {
         if (edge.a < 0 || edge.b < 0 || edge.a >= static_cast<int>(allPoints.size()) ||
@@ -154,6 +195,40 @@ void MeshRenderer::uploadMeshVertices(const geometry::Mesh& mesh) {
         mConstraintVertices.push_back(normalizeY(b.y));
     }
 
+    std::set<std::pair<int, int>> triangulationEdges;
+    for (const auto& triangle : triangles) {
+        const std::array<int, 3> v = {triangle.vertices[0], triangle.vertices[1], triangle.vertices[2]};
+
+        for (size_t i = 0; i < v.size(); ++i) {
+            const int a = v[i];
+            const int b = v[(i + 1) % v.size()];
+
+            if (a < 0 || b < 0 || a >= static_cast<int>(allPoints.size()) ||
+                b >= static_cast<int>(allPoints.size())) {
+                continue;
+            }
+
+            const auto& pa = allPoints[a];
+            const auto& pb = allPoints[b];
+            if (pa.isSymbolic() || pb.isSymbolic()) {
+                continue;
+            }
+
+            triangulationEdges.emplace(std::min(a, b), std::max(a, b));
+        }
+    }
+
+    mTriangulationVertices.reserve(triangulationEdges.size() * 4);
+    for (const auto& edge : triangulationEdges) {
+        const auto& a = allPoints[edge.first];
+        const auto& b = allPoints[edge.second];
+
+        mTriangulationVertices.push_back(normalizeX(a.x));
+        mTriangulationVertices.push_back(normalizeY(a.y));
+        mTriangulationVertices.push_back(normalizeX(b.x));
+        mTriangulationVertices.push_back(normalizeY(b.y));
+    }
+
     mPointVbo.bind();
     mPointVbo.allocate(mMeshVertices.data(),
                        static_cast<int>(mMeshVertices.size() * sizeof(float)));
@@ -163,4 +238,9 @@ void MeshRenderer::uploadMeshVertices(const geometry::Mesh& mesh) {
     mLineVbo.allocate(mConstraintVertices.data(),
                       static_cast<int>(mConstraintVertices.size() * sizeof(float)));
     mLineVbo.release();
+
+    mTriangulationVbo.bind();
+    mTriangulationVbo.allocate(mTriangulationVertices.data(),
+                               static_cast<int>(mTriangulationVertices.size() * sizeof(float)));
+    mTriangulationVbo.release();
 }
