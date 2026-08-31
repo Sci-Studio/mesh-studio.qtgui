@@ -1,6 +1,5 @@
 #include "MeshPipeline.hpp"
 
-#include "geometry/Mesh.hpp"
 #include "parser/DxfParser.hpp"
 
 #include <utility>
