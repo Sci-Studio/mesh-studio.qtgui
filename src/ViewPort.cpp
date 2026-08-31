@@ -10,6 +10,8 @@ ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
 
     connect(mToolBox, &ToolBox::onTopViewClicked, this, &ViewPort::setTopView);
     connect(mToolBox, &ToolBox::onIsoViewClicked, this, &ViewPort::setIsoView);
+    connect(mToolBox, &ToolBox::onTriangulateClicked, this,
+            [this]() { emit triangulateRequested(); });
 }
 
 ViewPort::~ViewPort() {

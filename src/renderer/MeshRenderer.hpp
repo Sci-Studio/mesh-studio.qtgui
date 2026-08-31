@@ -23,8 +23,11 @@ class MeshRenderer {
     bool mInitialized = false;
     std::vector<float> mMeshVertices;
     std::vector<float> mConstraintVertices;
+    std::vector<float> mTriangulationVertices;
     QOpenGLVertexArrayObject mVao;
     QOpenGLVertexArrayObject mLineVao;
+    QOpenGLVertexArrayObject mTriangulationVao;
     QOpenGLBuffer mPointVbo{QOpenGLBuffer::VertexBuffer};
     QOpenGLBuffer mLineVbo{QOpenGLBuffer::VertexBuffer};
+    QOpenGLBuffer mTriangulationVbo{QOpenGLBuffer::VertexBuffer};
 };

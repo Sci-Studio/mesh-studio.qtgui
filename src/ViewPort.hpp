@@ -28,6 +28,9 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
   public:
     void setMesh(const geometry::Mesh& mesh);
 
+  signals:
+    void triangulateRequested();
+
   private slots:
     void setTopView();
     void setIsoView();

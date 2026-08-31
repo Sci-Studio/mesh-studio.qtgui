@@ -27,4 +27,6 @@ ToolBox::ToolBox(QWidget* parent) : QFrame(parent) {
 
     connect(mTopViewButton, &QPushButton::clicked, this, [this]() { emit onTopViewClicked(); });
     connect(mIsoViewButton, &QPushButton::clicked, this, [this]() { emit onIsoViewClicked(); });
+    connect(mTriangulateButton, &QPushButton::clicked, this,
+            [this]() { emit onTriangulateClicked(); });
 }
