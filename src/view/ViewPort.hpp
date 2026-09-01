@@ -1,10 +1,10 @@
 #pragma once
 
+#include "../renderer/MeshRenderer.hpp"
+#include "../renderer/Shader.hpp"
+#include "FloatingPanel.hpp"
+#include "ToolBox.hpp"
 #include "geometry/Mesh.hpp"
-#include "renderer/MeshRenderer.hpp"
-#include "renderer/Shader.hpp"
-#include "view/FloatingPanel.hpp"
-#include "view/ToolBox.hpp"
 
 #include <QColor>
 #include <QOpenGLFunctions>

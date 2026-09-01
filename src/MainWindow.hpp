@@ -1,7 +1,7 @@
 #pragma once
 
-#include "ViewPort.hpp"
 #include "view/MenuBar.hpp"
+#include "view/ViewPort.hpp"
 
 #include <QMainWindow>
 
