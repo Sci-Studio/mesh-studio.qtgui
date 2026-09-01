@@ -18,8 +18,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
         mViewPort->setCurrentFileName(QFileInfo(path).fileName());
         emit openNewFileRequest(path);
     });
-    connect(mViewPort, &ViewPort::triangulateRequested, this,
-            [this]() { emit triangulateRequest(); });
+    connect(mViewPort, &ViewPort::triangulateRequested, this, &MainWindow::triangulateRequest);
 }
 
 void MainWindow::setRenderMesh(const UIMesh& mesh) {
