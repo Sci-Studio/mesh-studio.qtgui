@@ -14,10 +14,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     mMenuBar = new MenuBar(this);
     setMenuBar(mMenuBar);
 
-    connect(mMenuBar, &MenuBar::openNewFile, this, [this](const QString& path) {
-        mViewPort->setCurrentFileName(QFileInfo(path).fileName());
-        emit openNewFileRequest(path);
-    });
+    connect(mMenuBar, &MenuBar::openNewFile, this, &MainWindow::openNewFileRequest);
     connect(mViewPort, &ViewPort::triangulateRequested, this, &MainWindow::triangulateRequest);
 }
 
@@ -27,4 +24,8 @@ void MainWindow::setRenderMesh(const UIMesh& mesh) {
 
 void MainWindow::setWarningMessage(const QString& warning) {
     QMessageBox::warning(this, "DXF Parsing Error", warning);
+}
+
+void MainWindow::setFileName(const QString& path) {
+    mViewPort->setCurrentFileName(QFileInfo(path).fileName());
 }

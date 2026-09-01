@@ -23,6 +23,7 @@ void MeshController::loadMesh(const QString& path) {
 
     mUIMesh.setFromMesh(std::move(nextMesh));
     mMainWindow.setRenderMesh(mUIMesh);
+    mMainWindow.setFileName(path);
     return;
 }
 

@@ -15,6 +15,7 @@ class MainWindow : public QMainWindow {
   public slots:
     void setRenderMesh(const UIMesh& mesh);
     void setWarningMessage(const QString& warning);
+    void setFileName(const QString& path);
 
   signals:
     void openNewFileRequest(const QString& path);
