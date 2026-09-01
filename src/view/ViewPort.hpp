@@ -1,9 +1,9 @@
 #pragma once
 
+#include "../model/UIMesh.hpp"
 #include "FloatingPanel.hpp"
 #include "MeshRenderer.hpp"
 #include "ToolBox.hpp"
-#include "geometry/Mesh.hpp"
 
 #include <QColor>
 #include <QOpenGLFunctions>
@@ -25,7 +25,7 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     void paintGL() override;
 
   public:
-    void setMesh(const geometry::Mesh& mesh);
+    void setMesh(const UIMesh& mesh);
 
   signals:
     void triangulateRequested();
@@ -36,7 +36,7 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
 
   private:
     QColor mBackground{QColor::fromRgb(30, 30, 30)};
-    geometry::Mesh mMesh;
+    UIMesh mUIMesh;
     bool mMeshUploadPending = true;
     QMatrix4x4 mViewMatrix;
     QMatrix4x4 mProjectionMatrix;

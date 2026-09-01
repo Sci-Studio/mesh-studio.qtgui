@@ -1,5 +1,4 @@
 #include "MainWindow.hpp"
-#include "geometry/Mesh.hpp"
 
 #include <QAction>
 #include <QFileInfo>
@@ -23,7 +22,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
             [this]() { emit triangulateRequest(); });
 }
 
-void MainWindow::setRenderMesh(const geometry::Mesh& mesh) {
+void MainWindow::setRenderMesh(const UIMesh& mesh) {
     mViewPort->setMesh(mesh);
 }
 

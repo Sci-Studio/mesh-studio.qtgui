@@ -61,7 +61,7 @@ void ViewPort::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT);
 
     if (mMeshUploadPending) {
-        mMeshRenderer.uploadMeshVertices(mMesh);
+        mMeshRenderer.uploadMeshVertices(mUIMesh);
         mMeshUploadPending = false;
     }
 
@@ -91,10 +91,10 @@ void ViewPort::setCurrentFileName(const QString& fileName) {
     mFloatingConfigPanel->setFileName(fileName);
 }
 
-void ViewPort::setMesh(const geometry::Mesh& mesh) {
-    mMesh = mesh;
-    qDebug() << "ViewPort mesh updated. points:" << mMesh.points().size()
-             << "constraints:" << mMesh.constraints().size();
+void ViewPort::setMesh(const UIMesh& uiMesh) {
+    mUIMesh = uiMesh;
+    qDebug() << "ViewPort mesh updated. points:" << mUIMesh.points().size()
+             << "constraints:" << mUIMesh.constraints().size();
     mMeshUploadPending = true;
     update();
 }

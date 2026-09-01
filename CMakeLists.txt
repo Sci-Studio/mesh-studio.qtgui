@@ -54,6 +54,8 @@ qt_add_executable(MeshGenQtApp
     src/utils/Shader.hpp
     src/controller/MeshController.cpp
     src/controller/MeshController.hpp
+    src/model/UIMesh.cpp
+    src/model/UIMesh.hpp
 )
 
 qt_add_resources(MeshGenQtApp shader_resources

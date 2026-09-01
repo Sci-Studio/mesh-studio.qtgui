@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../model/UIMesh.hpp"
 #include "MenuBar.hpp"
 #include "ViewPort.hpp"
 
@@ -12,7 +13,7 @@ class MainWindow : public QMainWindow {
     explicit MainWindow(QWidget* parent = nullptr);
 
   public slots:
-    void setRenderMesh(const geometry::Mesh& mesh);
+    void setRenderMesh(const UIMesh& mesh);
     void setWarningMessage(const QString& warning);
 
   signals:
