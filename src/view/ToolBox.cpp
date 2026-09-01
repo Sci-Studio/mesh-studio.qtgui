@@ -13,9 +13,9 @@ ToolBox::ToolBox(QWidget* parent) : QFrame(parent) {
     mIsoViewButton = new QPushButton(this);
     mTriangulateButton = new QPushButton(this);
 
-    mTopViewButton->setIcon(QIcon(":/assets/ui/top.png"));
-    mIsoViewButton->setIcon(QIcon(":/assets/ui/iso.png"));
-    mTriangulateButton->setIcon(QIcon(":/assets/ui/triangulate.png"));
+    mTopViewButton->setIcon(QIcon(":/svg/Rotate_CCW_24.svg"));
+    mIsoViewButton->setIcon(QIcon(":/svg/Rotate_CW_24.svg"));
+    mTriangulateButton->setIcon(QIcon(":/svg/Triangulate_24.svg"));
 
     mTopViewButton->setIconSize(QSize(45, 45));
     mIsoViewButton->setIconSize(QSize(45, 45));

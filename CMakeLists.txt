@@ -72,6 +72,17 @@ qt_add_resources(MeshGenQtApp shader_resources
         src/assets/ui/file-doc.svg
 )
 
+qt_add_resources(MeshGenQtApp "icons"
+    PREFIX "/"
+    BASE res
+    FILES
+        res/svg/File_24.svg
+        res/svg/Grid_24.svg
+        res/svg/Triangulate_24.svg
+        res/svg/Rotate_CCW_24.svg
+        res/svg/Rotate_CW_24.svg
+)
+
 target_link_libraries(MeshGenQtApp
     PRIVATE 
         Qt6::Widgets
