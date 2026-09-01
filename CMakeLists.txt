@@ -36,8 +36,6 @@ qt_add_executable(MeshGenQtApp
     src/Main.cpp
     src/MainWindow.cpp
     src/MainWindow.hpp
-    src/renderer/Shader.cpp
-    src/renderer/Shader.hpp
     src/view/MenuBar.cpp
     src/view/MenuBar.hpp
     src/view/PreferencesPopup.cpp
@@ -52,6 +50,8 @@ qt_add_executable(MeshGenQtApp
     src/view/ToolBox.hpp
     src/utils/Theme.cpp
     src/utils/Theme.hpp
+    src/utils/Shader.cpp
+    src/utils/Shader.hpp
     src/controller/MeshController.cpp
     src/controller/MeshController.hpp
 )

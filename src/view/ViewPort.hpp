@@ -1,8 +1,7 @@
 #pragma once
 
-#include "MeshRenderer.hpp"
-#include "../renderer/Shader.hpp"
 #include "FloatingPanel.hpp"
+#include "MeshRenderer.hpp"
 #include "ToolBox.hpp"
 #include "geometry/Mesh.hpp"
 
@@ -42,7 +41,7 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     QMatrix4x4 mViewMatrix;
     QMatrix4x4 mProjectionMatrix;
 
-    Shader mShader;
+    QOpenGLShaderProgram mProgram;
     MeshRenderer mMeshRenderer;
     FloatingPanel* mFloatingConfigPanel = nullptr;
     ToolBox* mToolBox = nullptr;

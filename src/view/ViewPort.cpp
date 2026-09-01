@@ -1,4 +1,5 @@
 #include "ViewPort.hpp"
+#include "../utils/Shader.hpp"
 
 #include <QDebug>
 #include <QVector3D>
@@ -16,7 +17,7 @@ ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
 ViewPort::~ViewPort() {
     makeCurrent();
     mMeshRenderer.destroy();
-    mShader.release();
+    mProgram.release();
     doneCurrent();
 }
 
@@ -25,11 +26,11 @@ void ViewPort::initializeGL() {
 
     glClearColor(mBackground.redF(), mBackground.greenF(), mBackground.blueF(), 1.0f);
 
-    if (!mShader.loadFromFiles(":/shaders/mesh.vertex", ":/shaders/mesh.fragment")) {
+    if (!Shader::loadFromFiles(":/shaders/mesh.vertex", ":/shaders/mesh.fragment", mProgram)) {
         qWarning() << "Unable to load mesh shaders.";
     }
 
-    if (!mMeshRenderer.initialize(mShader)) {
+    if (!mMeshRenderer.initialize(mProgram)) {
         qWarning() << "Unable to initialize mesh renderer.";
     }
 
@@ -66,15 +67,15 @@ void ViewPort::paintGL() {
 
     QMatrix4x4 mvp = mProjectionMatrix * mViewMatrix;
 
-    mShader.bind();
-    mShader.program()->setUniformValue("uColor", QVector3D(0.90f, 0.90f, 0.90f));
+    mProgram.bind();
+    mProgram.setUniformValue("uColor", QVector3D(0.90f, 0.90f, 0.90f));
 
-    mShader.program()->setUniformValue("uMVP", mvp);
+    mProgram.setUniformValue("uMVP", mvp);
 
     mMeshRenderer.draw();
 
     mMeshRenderer.release();
-    mShader.release();
+    mProgram.release();
 }
 
 void ViewPort::setBackgroundColor(const QColor& color) {
