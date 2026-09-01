@@ -34,8 +34,8 @@ qt_standard_project_setup()
 
 qt_add_executable(MeshGenQtApp
     src/Main.cpp
-    src/MainWindow.cpp
-    src/MainWindow.hpp
+    src/view/MainWindow.cpp
+    src/view/MainWindow.hpp
     src/view/MenuBar.cpp
     src/view/MenuBar.hpp
     src/view/PreferencesPopup.cpp

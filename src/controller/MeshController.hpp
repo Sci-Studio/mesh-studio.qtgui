@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../MainWindow.hpp"
+#include "../view/MainWindow.hpp"
 #include "geometry/Mesh.hpp"
 
 #include <QObject>

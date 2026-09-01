@@ -1,10 +1,10 @@
 #include <QApplication>
 #include <QTimer>
 
-#include "MainWindow.hpp"
 #include "controller/MeshController.hpp"
 #include "geometry/Mesh.hpp"
 #include "utils/Theme.hpp"
+#include "view/MainWindow.hpp"
 
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
