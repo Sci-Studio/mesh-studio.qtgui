@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shader.hpp"
+#include "../renderer/Shader.hpp"
 #include "geometry/Mesh.hpp"
 
 #include <QOpenGLBuffer>

@@ -38,12 +38,12 @@ qt_add_executable(MeshGenQtApp
     src/MainWindow.hpp
     src/renderer/Shader.cpp
     src/renderer/Shader.hpp
-    src/renderer/MeshRenderer.cpp
-    src/renderer/MeshRenderer.hpp
     src/view/MenuBar.cpp
     src/view/MenuBar.hpp
     src/view/PreferencesPopup.cpp
     src/view/PreferencesPopup.hpp
+    src/view/MeshRenderer.cpp
+    src/view/MeshRenderer.hpp
     src/view/ViewPort.cpp
     src/view/ViewPort.hpp
     src/view/FloatingPanel.cpp

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../renderer/MeshRenderer.hpp"
+#include "MeshRenderer.hpp"
 #include "../renderer/Shader.hpp"
 #include "FloatingPanel.hpp"
 #include "ToolBox.hpp"
