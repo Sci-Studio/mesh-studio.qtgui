@@ -58,18 +58,20 @@ qt_add_executable(MeshGenQtApp
 
 qt_add_resources(MeshGenQtApp shader_resources
     PREFIX "/"
-    BASE src
+    BASE res
     FILES
-        src/shaders/mesh.vertex
-        src/shaders/mesh.fragment
-        src/styles/tokens.qss
-        src/styles/app.qss
-        src/styles/ToolBox.qss
-        src/styles/FloatingPanel.qss
-        src/assets/ui/top.png
-        src/assets/ui/iso.png
-        src/assets/ui/triangulate.png
-        src/assets/ui/file-doc.svg
+        res/shaders/mesh.vertex
+        res/shaders/mesh.fragment
+)
+
+qt_add_resources(MeshGenQtApp style_resources
+    PREFIX "/"
+    BASE res
+    FILES
+        res/styles/tokens.qss
+        res/styles/app.qss
+        res/styles/ToolBox.qss
+        res/styles/FloatingPanel.qss
 )
 
 qt_add_resources(MeshGenQtApp "icons"
