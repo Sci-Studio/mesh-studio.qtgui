@@ -1,5 +1,5 @@
 #include "MainWindow.hpp"
-#include "ViewPort.hpp"
+#include "geometry/Mesh.hpp"
 
 #include <QAction>
 #include <QFileInfo>
@@ -11,25 +11,22 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
     mViewPort = new ViewPort(this);
     setCentralWidget(mViewPort);
-    mMeshPipeline = new MeshPipeline(this);
-
-    connect(mMeshPipeline, &MeshPipeline::meshUpdated, this,
-            [this]() { mViewPort->setMesh(mMeshPipeline->mesh()); });
-
-    connect(mMeshPipeline, &MeshPipeline::loadFailed, this, [this](const QString& message) {
-        QMessageBox::warning(this, "DXF Parsing Error", message);
-    });
-    connect(mMeshPipeline, &MeshPipeline::triangulationFailed, this,
-            [this](const QString& message) {
-                QMessageBox::warning(this, "Triangulation Error", message);
-            });
 
     mMenuBar = new MenuBar(this);
     setMenuBar(mMenuBar);
+
     connect(mMenuBar, &MenuBar::openNewFile, this, [this](const QString& path) {
         mViewPort->setCurrentFileName(QFileInfo(path).fileName());
-        mMeshPipeline->loadFromDxf(path);
+        emit openNewFileRequest(path);
     });
     connect(mViewPort, &ViewPort::triangulateRequested, this,
-            [this]() { mMeshPipeline->triangulate(); });
+            [this]() { emit triangulateRequest(); });
+}
+
+void MainWindow::setRenderMesh(const geometry::Mesh& mesh) {
+    mViewPort->setMesh(mesh);
+}
+
+void MainWindow::setWarningMessage(const QString& warning) {
+    QMessageBox::warning(this, "DXF Parsing Error", warning);
 }

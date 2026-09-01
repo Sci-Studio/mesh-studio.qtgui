@@ -1,6 +1,5 @@
 #pragma once
 
-#include "MeshPipeline.hpp"
 #include "ViewPort.hpp"
 #include "view/MenuBar.hpp"
 
@@ -12,8 +11,15 @@ class MainWindow : public QMainWindow {
   public:
     explicit MainWindow(QWidget* parent = nullptr);
 
+  public slots:
+    void setRenderMesh(const geometry::Mesh& mesh);
+    void setWarningMessage(const QString& warning);
+
+  signals:
+    void openNewFileRequest(const QString& path);
+    void triangulateRequest();
+
   private:
     MenuBar* mMenuBar = nullptr;
     ViewPort* mViewPort = nullptr;
-    MeshPipeline* mMeshPipeline = nullptr;
 };

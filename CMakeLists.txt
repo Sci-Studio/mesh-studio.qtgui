@@ -36,8 +36,6 @@ qt_add_executable(MeshGenQtApp
     src/Main.cpp
     src/MainWindow.cpp
     src/MainWindow.hpp
-    src/MeshPipeline.cpp
-    src/MeshPipeline.hpp
     src/ViewPort.cpp
     src/ViewPort.hpp
     src/renderer/Shader.cpp
@@ -54,6 +52,8 @@ qt_add_executable(MeshGenQtApp
     src/view/ToolBox.hpp
     src/utils/Theme.cpp
     src/utils/Theme.hpp
+    src/controller/MeshController.cpp
+    src/controller/MeshController.hpp
 )
 
 qt_add_resources(MeshGenQtApp shader_resources
