@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
     window.show();
 
     UIMesh uiMesh;
-    MeshController meshController(&uiMesh, &window);
+    MeshController meshController(uiMesh, window);
 
     QTimer::singleShot(5, &window, [&window]() { window.setWindowState(Qt::WindowMaximized); });
 

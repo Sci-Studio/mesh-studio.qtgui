@@ -5,47 +5,37 @@
 
 bool triangulate(geometry::Mesh& mesh);
 
-MeshController::MeshController(UIMesh* uiMesh, MainWindow* window, QObject* parent)
+MeshController::MeshController(UIMesh& uiMesh, MainWindow& window, QObject* parent)
     : QObject(parent), mUIMesh(uiMesh), mMainWindow(window) {
 
-    connect(mMainWindow, &MainWindow::openNewFileRequest, this, &MeshController::loadMesh);
-    connect(mMainWindow, &MainWindow::triangulateRequest, this, &MeshController::triangulate);
+    connect(&mMainWindow, &MainWindow::openNewFileRequest, this, &MeshController::loadMesh);
+    connect(&mMainWindow, &MainWindow::triangulateRequest, this, &MeshController::triangulate);
 }
 
 void MeshController::loadMesh(const QString& path) {
-    if (mUIMesh == nullptr) {
-        mMainWindow->setWarningMessage("Mesh controller is not initialized.");
-        return;
-    }
-
     parser::dxf::DxfParser parser;
     geometry::Mesh nextMesh;
 
     if (!parser.loadMesh(path.toUtf8().constData(), nextMesh)) {
-        mMainWindow->setWarningMessage(QStringLiteral("Failed to parse %1").arg(path));
+        mMainWindow.setWarningMessage(QStringLiteral("Failed to parse %1").arg(path));
         return;
     }
 
-    mUIMesh->setFromMesh(std::move(nextMesh));
-    mMainWindow->setRenderMesh(*mUIMesh);
+    mUIMesh.setFromMesh(std::move(nextMesh));
+    mMainWindow.setRenderMesh(mUIMesh);
     return;
 }
 
 void MeshController::triangulate() {
-    if (mUIMesh == nullptr) {
-        mMainWindow->setWarningMessage("Mesh controller is not initialized.");
+    if (mUIMesh.pointsReal().empty()) {
+        mMainWindow.setWarningMessage("Load a DXF file before triangulation.");
         return;
     }
 
-    if (mUIMesh->pointsReal().empty()) {
-        mMainWindow->setWarningMessage("Load a DXF file before triangulation.");
+    if (!::triangulate(mUIMesh)) {
+        mMainWindow.setWarningMessage("Triangulation failed.");
         return;
     }
 
-    if (!::triangulate(*mUIMesh)) {
-        mMainWindow->setWarningMessage("Triangulation failed.");
-        return;
-    }
-
-    mMainWindow->setRenderMesh(*mUIMesh);
+    mMainWindow.setRenderMesh(mUIMesh);
 }

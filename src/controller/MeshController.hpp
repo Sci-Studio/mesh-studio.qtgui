@@ -10,13 +10,13 @@ class MeshController : public QObject {
     Q_OBJECT
 
   public:
-    explicit MeshController(UIMesh* uiMesh, MainWindow* window, QObject* parent = nullptr);
+    explicit MeshController(UIMesh& uiMesh, MainWindow& window, QObject* parent = nullptr);
 
   private slots:
     void triangulate();
     void loadMesh(const QString& path);
 
   private:
-    UIMesh* mUIMesh;
-    MainWindow* mMainWindow;
+    UIMesh& mUIMesh;
+    MainWindow& mMainWindow;
 };
