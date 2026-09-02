@@ -1,10 +1,9 @@
 #pragma once
 
-#include "geometry/Mesh.hpp"
-#include "renderer/MeshRenderer.hpp"
-#include "renderer/Shader.hpp"
-#include "view/FloatingPanel.hpp"
-#include "view/ToolBox.hpp"
+#include "../model/UIMesh.hpp"
+#include "FloatingPanel.hpp"
+#include "MeshRenderer.hpp"
+#include "ToolBox.hpp"
 
 #include <QColor>
 #include <QOpenGLFunctions>
@@ -26,7 +25,7 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     void paintGL() override;
 
   public:
-    void setMesh(const geometry::Mesh& mesh);
+    void setMesh(const UIMesh& mesh);
 
   signals:
     void triangulateRequested();
@@ -37,12 +36,12 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
 
   private:
     QColor mBackground{QColor::fromRgb(30, 30, 30)};
-    geometry::Mesh mMesh;
+    UIMesh mUIMesh;
     bool mMeshUploadPending = true;
     QMatrix4x4 mViewMatrix;
     QMatrix4x4 mProjectionMatrix;
 
-    Shader mShader;
+    QOpenGLShaderProgram mProgram;
     MeshRenderer mMeshRenderer;
     FloatingPanel* mFloatingConfigPanel = nullptr;
     ToolBox* mToolBox = nullptr;

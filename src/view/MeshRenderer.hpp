@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Shader.hpp"
 #include "geometry/Mesh.hpp"
 
 #include <QOpenGLBuffer>
+#include <QOpenGLShaderProgram>
 #include <QOpenGLVertexArrayObject>
 #include <vector>
 
@@ -11,7 +11,7 @@ class MeshRenderer {
   public:
     MeshRenderer();
     ~MeshRenderer();
-    bool initialize(Shader& shader);
+    bool initialize(QOpenGLShaderProgram& program);
     void destroy();
     void draw();
     void release();

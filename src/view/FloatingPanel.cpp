@@ -32,7 +32,7 @@ FloatingPanel::FloatingPanel(QWidget* parent) : QFrame(parent) {
 
     auto* docIcon = new QLabel(header);
     docIcon->setFixedSize(14, 17);
-    docIcon->setPixmap(QPixmap(":/assets/ui/file-doc.svg")
+    docIcon->setPixmap(QPixmap(":/svg/File_24.svg")
                            .scaled(docIcon->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     titleRow->addWidget(docIcon, 0, Qt::AlignVCenter);
 

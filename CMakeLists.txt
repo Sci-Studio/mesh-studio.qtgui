@@ -34,42 +34,57 @@ qt_standard_project_setup()
 
 qt_add_executable(MeshGenQtApp
     src/Main.cpp
-    src/MainWindow.cpp
-    src/MainWindow.hpp
-    src/MeshPipeline.cpp
-    src/MeshPipeline.hpp
-    src/ViewPort.cpp
-    src/ViewPort.hpp
-    src/renderer/Shader.cpp
-    src/renderer/Shader.hpp
-    src/renderer/MeshRenderer.cpp
-    src/renderer/MeshRenderer.hpp
+    src/view/MainWindow.cpp
+    src/view/MainWindow.hpp
     src/view/MenuBar.cpp
     src/view/MenuBar.hpp
     src/view/PreferencesPopup.cpp
     src/view/PreferencesPopup.hpp
+    src/view/MeshRenderer.cpp
+    src/view/MeshRenderer.hpp
+    src/view/ViewPort.cpp
+    src/view/ViewPort.hpp
     src/view/FloatingPanel.cpp
     src/view/FloatingPanel.hpp
     src/view/ToolBox.cpp
     src/view/ToolBox.hpp
     src/utils/Theme.cpp
     src/utils/Theme.hpp
+    src/utils/Shader.cpp
+    src/utils/Shader.hpp
+    src/controller/MeshController.cpp
+    src/controller/MeshController.hpp
+    src/model/UIMesh.cpp
+    src/model/UIMesh.hpp
 )
 
 qt_add_resources(MeshGenQtApp shader_resources
     PREFIX "/"
-    BASE src
+    BASE res
     FILES
-        src/shaders/mesh.vertex
-        src/shaders/mesh.fragment
-        src/styles/tokens.qss
-        src/styles/app.qss
-        src/styles/ToolBox.qss
-        src/styles/FloatingPanel.qss
-        src/assets/ui/top.png
-        src/assets/ui/iso.png
-        src/assets/ui/triangulate.png
-        src/assets/ui/file-doc.svg
+        res/shaders/mesh.vertex
+        res/shaders/mesh.fragment
+)
+
+qt_add_resources(MeshGenQtApp style_resources
+    PREFIX "/"
+    BASE res
+    FILES
+        res/styles/tokens.qss
+        res/styles/app.qss
+        res/styles/ToolBox.qss
+        res/styles/FloatingPanel.qss
+)
+
+qt_add_resources(MeshGenQtApp "icons"
+    PREFIX "/"
+    BASE res
+    FILES
+        res/svg/File_24.svg
+        res/svg/Grid_24.svg
+        res/svg/Triangulate_24.svg
+        res/svg/Rotate_CCW_24.svg
+        res/svg/Rotate_CW_24.svg
 )
 
 target_link_libraries(MeshGenQtApp

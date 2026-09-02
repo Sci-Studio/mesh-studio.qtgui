@@ -11,7 +11,7 @@ MeshRenderer::~MeshRenderer() {
     destroy();
 }
 
-bool MeshRenderer::initialize(Shader& shader) {
+bool MeshRenderer::initialize(QOpenGLShaderProgram& program) {
     if (mInitialized) {
         return true;
     }
@@ -61,28 +61,28 @@ bool MeshRenderer::initialize(Shader& shader) {
     mTriangulationVbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
 
     mVao.bind();
-    shader.bind();
+    program.bind();
     mPointVbo.bind();
 
-    shader.program()->enableAttributeArray(0);
-    shader.program()->setAttributeBuffer(0, GL_FLOAT, 0, 2, 2 * sizeof(float));
+    program.enableAttributeArray(0);
+    program.setAttributeBuffer(0, GL_FLOAT, 0, 2, 2 * sizeof(float));
 
     mPointVbo.release();
 
     mLineVao.bind();
     mLineVbo.bind();
-    shader.program()->enableAttributeArray(0);
-    shader.program()->setAttributeBuffer(0, GL_FLOAT, 0, 2, 2 * sizeof(float));
+    program.enableAttributeArray(0);
+    program.setAttributeBuffer(0, GL_FLOAT, 0, 2, 2 * sizeof(float));
 
     mLineVbo.release();
 
     mTriangulationVao.bind();
     mTriangulationVbo.bind();
-    shader.program()->enableAttributeArray(0);
-    shader.program()->setAttributeBuffer(0, GL_FLOAT, 0, 2, 2 * sizeof(float));
+    program.enableAttributeArray(0);
+    program.setAttributeBuffer(0, GL_FLOAT, 0, 2, 2 * sizeof(float));
     mTriangulationVbo.release();
 
-    shader.release();
+    program.release();
     mTriangulationVao.release();
     mLineVao.release();
     mVao.release();
@@ -197,7 +197,8 @@ void MeshRenderer::uploadMeshVertices(const geometry::Mesh& mesh) {
 
     std::set<std::pair<int, int>> triangulationEdges;
     for (const auto& triangle : triangles) {
-        const std::array<int, 3> v = {triangle.vertices[0], triangle.vertices[1], triangle.vertices[2]};
+        const std::array<int, 3> v = {triangle.vertices[0], triangle.vertices[1],
+                                      triangle.vertices[2]};
 
         for (size_t i = 0; i < v.size(); ++i) {
             const int a = v[i];

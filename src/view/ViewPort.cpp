@@ -1,5 +1,5 @@
 #include "ViewPort.hpp"
-#include "view/ToolBox.hpp"
+#include "../utils/Shader.hpp"
 
 #include <QDebug>
 #include <QVector3D>
@@ -17,7 +17,7 @@ ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
 ViewPort::~ViewPort() {
     makeCurrent();
     mMeshRenderer.destroy();
-    mShader.release();
+    mProgram.release();
     doneCurrent();
 }
 
@@ -26,11 +26,11 @@ void ViewPort::initializeGL() {
 
     glClearColor(mBackground.redF(), mBackground.greenF(), mBackground.blueF(), 1.0f);
 
-    if (!mShader.loadFromFiles(":/shaders/mesh.vertex", ":/shaders/mesh.fragment")) {
+    if (!Shader::loadFromFiles(":/shaders/mesh.vertex", ":/shaders/mesh.fragment", mProgram)) {
         qWarning() << "Unable to load mesh shaders.";
     }
 
-    if (!mMeshRenderer.initialize(mShader)) {
+    if (!mMeshRenderer.initialize(mProgram)) {
         qWarning() << "Unable to initialize mesh renderer.";
     }
 
@@ -61,21 +61,21 @@ void ViewPort::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT);
 
     if (mMeshUploadPending) {
-        mMeshRenderer.uploadMeshVertices(mMesh);
+        mMeshRenderer.uploadMeshVertices(mUIMesh);
         mMeshUploadPending = false;
     }
 
     QMatrix4x4 mvp = mProjectionMatrix * mViewMatrix;
 
-    mShader.bind();
-    mShader.program()->setUniformValue("uColor", QVector3D(0.90f, 0.90f, 0.90f));
+    mProgram.bind();
+    mProgram.setUniformValue("uColor", QVector3D(0.90f, 0.90f, 0.90f));
 
-    mShader.program()->setUniformValue("uMVP", mvp);
+    mProgram.setUniformValue("uMVP", mvp);
 
     mMeshRenderer.draw();
 
     mMeshRenderer.release();
-    mShader.release();
+    mProgram.release();
 }
 
 void ViewPort::setBackgroundColor(const QColor& color) {
@@ -91,10 +91,10 @@ void ViewPort::setCurrentFileName(const QString& fileName) {
     mFloatingConfigPanel->setFileName(fileName);
 }
 
-void ViewPort::setMesh(const geometry::Mesh& mesh) {
-    mMesh = mesh;
-    qDebug() << "ViewPort mesh updated. points:" << mMesh.points().size()
-             << "constraints:" << mMesh.constraints().size();
+void ViewPort::setMesh(const UIMesh& uiMesh) {
+    mUIMesh = uiMesh;
+    qDebug() << "ViewPort mesh updated. points:" << mUIMesh.points().size()
+             << "constraints:" << mUIMesh.constraints().size();
     mMeshUploadPending = true;
     update();
 }
