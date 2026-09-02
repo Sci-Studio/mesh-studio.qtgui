@@ -1,9 +1,8 @@
 #include "MeshController.hpp"
+#include "Delaunay.hpp"
 #include "parser/DxfParser.hpp"
 
 #include <utility>
-
-bool triangulate(geometry::Mesh& mesh);
 
 MeshController::MeshController(UIMesh& uiMesh, MainWindow& window, QObject* parent)
     : QObject(parent), mUIMesh(uiMesh), mMainWindow(window) {
