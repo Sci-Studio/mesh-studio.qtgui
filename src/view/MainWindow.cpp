@@ -2,17 +2,26 @@
 
 #include <QAction>
 #include <QFileInfo>
+#include <QHBoxLayout>
 #include <QMessageBox>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setMinimumSize(800, 600);
     setWindowTitle("MeshGenQt");
 
-    mViewPort = new ViewPort(this);
-    setCentralWidget(mViewPort);
-
     mMenuBar = new MenuBar(this);
     setMenuBar(mMenuBar);
+
+    mWorkspace = new QWidget(this);
+    auto* workspaceLayout = new QHBoxLayout(mWorkspace);
+    workspaceLayout->setContentsMargins(5, 5, 5, 5);
+    workspaceLayout->setSpacing(5);
+
+    mMeshExplorer = new MeshExplorer(mWorkspace);
+    mViewPort = new ViewPort(mWorkspace);
+    workspaceLayout->addWidget(mMeshExplorer);
+    workspaceLayout->addWidget(mViewPort, 1);
+    setCentralWidget(mWorkspace);
 
     connect(mMenuBar, &MenuBar::openNewFile, this, &MainWindow::openNewFileRequest);
     connect(mViewPort, &ViewPort::triangulateRequested, this, &MainWindow::triangulateRequest);

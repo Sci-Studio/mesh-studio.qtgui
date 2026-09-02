@@ -2,9 +2,11 @@
 
 #include "../model/UIMesh.hpp"
 #include "MenuBar.hpp"
+#include "MeshExplorer.hpp"
 #include "ViewPort.hpp"
 
 #include <QMainWindow>
+#include <QWidget>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -23,5 +25,9 @@ class MainWindow : public QMainWindow {
 
   private:
     MenuBar* mMenuBar = nullptr;
+    QWidget* mWorkspace = nullptr;
+    MeshExplorer* mMeshExplorer = nullptr;
     ViewPort* mViewPort = nullptr;
+
+    void updateMeshExplorerWidth();
 };

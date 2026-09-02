@@ -46,6 +46,8 @@ qt_add_executable(MeshGenQtApp
     src/view/ViewPort.hpp
     src/view/FloatingPanel.cpp
     src/view/FloatingPanel.hpp
+    src/view/MeshExplorer.cpp
+    src/view/MeshExplorer.hpp
     src/view/ToolBox.cpp
     src/view/ToolBox.hpp
     src/utils/Theme.cpp
