@@ -168,15 +168,15 @@ void MeshExplorer::setRowLabelValue(QLabel* label, unsigned int value) {
     label->setText(QLocale().toString(static_cast<qlonglong>(value)));
 }
 
-void MeshExplorer::setPointsValueLabel(unsigned int points) {
+void MeshExplorer::setPointsValueLabel(size_t points) {
     setRowLabelValue(mPointsValueLabel, points);
 }
 
-void MeshExplorer::setConstraintsValueLabel(unsigned int constraints) {
+void MeshExplorer::setConstraintsValueLabel(size_t constraints) {
     setRowLabelValue(mConstraintsValueLabel, constraints);
 }
 
-void MeshExplorer::setTrianglesValueLabel(unsigned int triangles) {
+void MeshExplorer::setTrianglesValueLabel(size_t triangles) {
     setRowLabelValue(mTrianglesValueLabel, triangles);
 }
 

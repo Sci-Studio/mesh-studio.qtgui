@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QToolButton>
 #include <QVBoxLayout>
+#include <cstddef>
 
 class MeshExplorer : public QFrame {
     Q_OBJECT
@@ -12,9 +13,9 @@ class MeshExplorer : public QFrame {
     explicit MeshExplorer(QWidget* parent = nullptr);
 
     void setCurrentFileName(const QString& fileName);
-    void setPointsValueLabel(const unsigned int points);
-    void setConstraintsValueLabel(const unsigned int points);
-    void setTrianglesValueLabel(const unsigned int points);
+    void setPointsValueLabel(const size_t points);
+    void setConstraintsValueLabel(const size_t points);
+    void setTrianglesValueLabel(const size_t points);
 
   private:
     QLabel* mFileNameLabel = nullptr;
