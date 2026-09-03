@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
     mMeshExplorer = new MeshExplorer(mWorkspace);
     mViewPort = new ViewPort(mWorkspace);
-    workspaceLayout->addWidget(mMeshExplorer);
+    workspaceLayout->addWidget(mMeshExplorer, 0, Qt::AlignTop);
     workspaceLayout->addWidget(mViewPort, 1);
     setCentralWidget(mWorkspace);
 
@@ -36,5 +36,5 @@ void MainWindow::setWarningMessage(const QString& warning) {
 }
 
 void MainWindow::setFileName(const QString& path) {
-    mViewPort->setCurrentFileName(QFileInfo(path).fileName());
+    mMeshExplorer->setCurrentFileName(QFileInfo(path).fileName());
 }

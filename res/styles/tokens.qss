@@ -11,6 +11,8 @@
  * surface-container: #1e2020
  * surface-container-high: #282a2b
  * surface-container-highest: #333535
+ * surface-container-low: #1A1C1C
+ * outline-variant: #4447484D
  */
 
 /*

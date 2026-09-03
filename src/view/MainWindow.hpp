@@ -28,6 +28,4 @@ class MainWindow : public QMainWindow {
     QWidget* mWorkspace = nullptr;
     MeshExplorer* mMeshExplorer = nullptr;
     ViewPort* mViewPort = nullptr;
-
-    void updateMeshExplorerWidth();
 };

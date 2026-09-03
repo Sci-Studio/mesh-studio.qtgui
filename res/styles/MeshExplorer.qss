@@ -1,0 +1,18 @@
+QFrame#ms-mesh-explorer {
+    background-color: #1a1c1c; /* surface-container-low */
+    border: 1px solid #44474866;
+    border-radius: 8px; 
+}
+
+QFrame#ms-mesh-explorer-header {
+    background-color: #4447484d; /* outline-variant 30% */
+    border-bottom: 1px solid #44474880; /* outline-variant 50% */
+}
+
+QLabel#ms-mesh-explorer-file-name {
+    background-color: transparent;
+    color: #e2e2e2; /* on-surface */
+    font-family: "JetBrains Mono";
+    font-size: 12px;
+    font-weight: 500;
+}
