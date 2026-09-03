@@ -2,7 +2,9 @@
 
 #include <QFrame>
 #include <QLabel>
+#include <QToolButton>
 #include <QVBoxLayout>
+
 class MeshExplorer : public QFrame {
     Q_OBJECT
 
@@ -16,13 +18,18 @@ class MeshExplorer : public QFrame {
 
   private:
     QLabel* mFileNameLabel = nullptr;
-    QLabel* mChevronLabel = nullptr;
+    QToolButton* mChevronButton = nullptr;
     QLabel* mPointsValueLabel = nullptr;
     QLabel* mConstraintsValueLabel = nullptr;
     QLabel* mTrianglesValueLabel = nullptr;
     QFrame* mGeometryFrame = nullptr;
+    QPixmap mChevronDownIcon;
+    QPixmap mChevronRightIcon;
+    bool mGeometryExpanded = false;
 
     void setGeometryFrameVisible(bool visible);
+    void setGeometryExpanded(bool expanded);
+    void toggleGeometryVisibility();
     void setRowLabelValue(QLabel* label, unsigned int value);
     void createHeader(QVBoxLayout* rootLayout);
     void createGeometryStats(QVBoxLayout* rootLayout);

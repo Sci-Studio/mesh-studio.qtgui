@@ -17,6 +17,24 @@ QLabel#ms-mesh-explorer-file-name {
     font-weight: 500;
 }
 
+QToolButton#ms-mesh-explorer-chevron-btn {
+    background-color: transparent;
+    border: 0;
+    min-width: 12px;
+    min-height: 12px;
+    padding: 0;
+}
+
+QToolButton#ms-mesh-explorer-chevron-btn:hover {
+    background-color: transparent;
+    border: 0;
+}
+
+QToolButton#ms-mesh-explorer-chevron-btn:pressed {
+    background-color: transparent;
+    border: 0;
+}
+
 QLabel#ms-mesh-explorer-section-title {
     color: #c4c7c7; /* on-surface-variant */
     font-family: "Inter";
