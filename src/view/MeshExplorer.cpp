@@ -17,6 +17,7 @@ MeshExplorer::MeshExplorer(QWidget* parent) : QFrame(parent) {
 
     createHeader(rootLayout);
     createGeometryStats(rootLayout);
+    setCurrentFileName(QString());
 }
 
 void MeshExplorer::createHeader(QVBoxLayout* rootLayout) {
@@ -29,6 +30,19 @@ void MeshExplorer::createHeader(QVBoxLayout* rootLayout) {
     auto* headerLayout = new QHBoxLayout(headerFrame);
     headerLayout->setContentsMargins(16, 16, 16, 16);
     headerLayout->setSpacing(12);
+
+    mChevronButton = new QToolButton(headerFrame);
+    mChevronButton->setObjectName("ms-mesh-explorer-chevron-btn");
+    mChevronButton->setFixedSize(12, 12);
+    mChevronButton->setVisible(true);
+    mChevronButton->setAttribute(Qt::WA_TranslucentBackground, true);
+
+    const QPixmap source(":/svg/Chevron_24.svg");
+    mChevronDownIcon = source.scaled(12, 12, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    mChevronRightIcon =
+        mChevronDownIcon.transformed(QTransform().rotate(-90.0), Qt::SmoothTransformation);
+    mChevronButton->setIcon(QIcon(mChevronDownIcon));
+    headerLayout->addWidget(mChevronButton, 0, Qt::AlignVCenter);
 
     auto* fileIconLabel = new QLabel(headerFrame);
     fileIconLabel->setObjectName("ms-mesh-explorer-file-icon");
@@ -46,20 +60,7 @@ void MeshExplorer::createHeader(QVBoxLayout* rootLayout) {
     mFileNameLabel->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     headerLayout->addWidget(mFileNameLabel, 1);
 
-    mChevronButton = new QToolButton(headerFrame);
-    mChevronButton->setObjectName("ms-mesh-explorer-chevron");
-    mChevronButton->setFixedSize(12, 12);
-    mChevronButton->setVisible(false);
-    mChevronButton->setAttribute(Qt::WA_TranslucentBackground, true);
-
-    const QPixmap source(":/svg/Chevron_24.svg");
-    mChevronDownIcon = source.scaled(12, 12, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    mChevronRightIcon =
-        mChevronDownIcon.transformed(QTransform().rotate(-90.0), Qt::SmoothTransformation);
-    mChevronButton->setIcon(QIcon(mChevronDownIcon));
-
     connect(mChevronButton, &QToolButton::clicked, this, &MeshExplorer::toggleGeometryVisibility);
-    headerLayout->addWidget(mChevronButton, 0, Qt::AlignVCenter);
 
     rootLayout->addWidget(headerFrame);
 }
@@ -129,19 +130,20 @@ QFrame* MeshExplorer::createStatRow(const QString& iconPath, const QString& labe
 }
 
 void MeshExplorer::setCurrentFileName(const QString& fileName) {
-    if (mFileNameLabel == nullptr) {
+    if (mFileNameLabel == nullptr || mChevronButton == nullptr) {
         return;
     }
-    QString trimmedFileName;
-    if (fileName.isEmpty()) {
-        qWarning() << "Empty file name";
+    const QString trimmedFileName = fileName.trimmed();
+    if (trimmedFileName.isEmpty()) {
         mFileNameLabel->setText(QStringLiteral("No File Selected"));
-        mChevronButton->setVisible(false);
+        mChevronButton->setEnabled(false);
         setGeometryFrameVisible(false);
+        setGeometryExpanded(false);
+        mChevronButton->setIcon(QIcon(mChevronRightIcon));
         return;
     }
-    mFileNameLabel->setText(fileName);
-    mChevronButton->setVisible(true);
+    mFileNameLabel->setText(trimmedFileName);
+    mChevronButton->setEnabled(true);
     setGeometryFrameVisible(true);
     setGeometryExpanded(true);
     mChevronButton->setIcon(QIcon(mChevronDownIcon));
@@ -174,7 +176,7 @@ void MeshExplorer::setGeometryFrameVisible(bool visible) {
 }
 
 void MeshExplorer::toggleGeometryVisibility() {
-    if (mGeometryFrame == nullptr) {
+    if (mGeometryFrame == nullptr || mChevronButton == nullptr || !mChevronButton->isEnabled()) {
         return;
     }
     setGeometryExpanded(!mGeometryExpanded);
