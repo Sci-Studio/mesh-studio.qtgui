@@ -13,6 +13,7 @@ MeshExplorer::MeshExplorer(QWidget* parent) : QFrame(parent) {
     rootLayout->setSpacing(0);
 
     createHeader(rootLayout);
+    createGeometryStats(rootLayout);
 }
 
 void MeshExplorer::createHeader(QVBoxLayout* rootLayout) {
@@ -52,6 +53,72 @@ void MeshExplorer::createHeader(QVBoxLayout* rootLayout) {
     headerLayout->addWidget(chevronLabel, 0, Qt::AlignVCenter);
 
     rootLayout->addWidget(headerFrame);
+}
+
+void MeshExplorer::createGeometryStats(QVBoxLayout* rootLayout) {
+    auto* geometryFrame = new QFrame(this);
+    geometryFrame->setObjectName("ms-mesh-explorer-geometry");
+    geometryFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+
+    auto* geometryLayout = new QVBoxLayout(geometryFrame);
+    geometryLayout->setContentsMargins(0, 6, 0, 6);
+    geometryLayout->setSpacing(0);
+
+    auto* sectionHeader = new QLabel("GEOMETRY", geometryFrame);
+    sectionHeader->setObjectName("ms-mesh-explorer-section-title");
+    sectionHeader->setContentsMargins(10, 4, 10, 6);
+    geometryLayout->addWidget(sectionHeader);
+
+    geometryLayout->addWidget(createStatRow(":/svg/Points_24.svg", "Points", mPointsValueLabel));
+    createDivider(geometryLayout, geometryFrame, "points");
+    geometryLayout->addWidget(
+        createStatRow(":/svg/Constraints_24.svg", "Constraints", mConstraintsValueLabel));
+    createDivider(geometryLayout, geometryFrame, "constraints");
+    geometryLayout->addWidget(
+        createStatRow(":/svg/Triangle_24.svg", "Triangles", mTrianglesValueLabel));
+    createDivider(geometryLayout, geometryFrame, "triangles");
+
+    rootLayout->addWidget(geometryFrame);
+}
+
+void MeshExplorer::createDivider(QVBoxLayout* geometryLayout, QFrame* geometryFrame,
+                                 const QString& objectName) {
+    const QString normalized = objectName.trimmed().toLower().replace(' ', '-');
+    auto* divider = new QFrame(geometryFrame);
+    divider->setObjectName(QStringLiteral("ms-mesh-explorer-divider-%1").arg(normalized));
+    divider->setFixedHeight(1);
+    geometryLayout->addWidget(divider);
+}
+
+QFrame* MeshExplorer::createStatRow(const QString& iconPath, const QString& labelText,
+                                    QLabel*& valueLabel) {
+    const QString normalized = labelText.trimmed().toLower().replace(' ', '-');
+
+    auto* rowFrame = new QFrame(this);
+    rowFrame->setObjectName(QStringLiteral("ms-mesh-explorer-stat-row-%1").arg(normalized));
+    rowFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+
+    auto* rowLayout = new QHBoxLayout(rowFrame);
+    rowLayout->setContentsMargins(10, 8, 10, 8);
+    rowLayout->setSpacing(8);
+
+    auto* iconLabel = new QLabel(rowFrame);
+    iconLabel->setObjectName(QStringLiteral("ms-mesh-explorer-stat-icon-%1").arg(normalized));
+    iconLabel->setFixedSize(16, 16);
+    iconLabel->setPixmap(
+        QPixmap(iconPath).scaled(iconLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    rowLayout->addWidget(iconLabel, 0, Qt::AlignVCenter);
+
+    auto* textLabel = new QLabel(labelText, rowFrame);
+    textLabel->setObjectName(QStringLiteral("ms-mesh-explorer-stat-label-%1").arg(normalized));
+    rowLayout->addWidget(textLabel, 1, Qt::AlignVCenter);
+
+    valueLabel = new QLabel("0", rowFrame);
+    valueLabel->setObjectName("ms-mesh-explorer-stat-value");
+    valueLabel->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
+    rowLayout->addWidget(valueLabel, 0, Qt::AlignVCenter);
+
+    return rowFrame;
 }
 
 void MeshExplorer::setCurrentFileName(const QString& fileName) {
