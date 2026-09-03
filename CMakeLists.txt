@@ -46,6 +46,8 @@ qt_add_executable(MeshGenQtApp
     src/view/ViewPort.hpp
     src/view/MeshExplorer.cpp
     src/view/MeshExplorer.hpp
+    src/view/ToolBar.cpp
+    src/view/ToolBar.hpp
     src/view/ToolBox.cpp
     src/view/ToolBox.hpp
     src/utils/Theme.cpp
@@ -73,6 +75,7 @@ qt_add_resources(MeshGenQtApp style_resources
         res/styles/tokens.qss
         res/styles/app.qss
         res/styles/ToolBox.qss
+        res/styles/ToolBar.qss
         res/styles/MeshExplorer.qss
 )
 

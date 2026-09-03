@@ -3,18 +3,22 @@
 
 #include <QDebug>
 #include <QVector3D>
+#include <algorithm>
 
 ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
+    mToolBar = new ToolBar(this);
     mToolBox = new ToolBox(this);
+    mToolBar->setGridEnabled(mGridVisible);
 
+    connect(mToolBar, &ToolBar::triangulateClicked, this, [this]() { emit triangulateRequested(); });
+    connect(mToolBar, &ToolBar::gridToggled, this, &ViewPort::setGridVisible);
     connect(mToolBox, &ToolBox::onTopViewClicked, this, &ViewPort::setTopView);
     connect(mToolBox, &ToolBox::onIsoViewClicked, this, &ViewPort::setIsoView);
-    connect(mToolBox, &ToolBox::onTriangulateClicked, this,
-            [this]() { emit triangulateRequested(); });
 }
 
 ViewPort::~ViewPort() {
     makeCurrent();
+    destroyGrid();
     mMeshRenderer.destroy();
     mProgram.release();
     doneCurrent();
@@ -32,23 +36,24 @@ void ViewPort::initializeGL() {
     if (!mMeshRenderer.initialize(mProgram)) {
         qWarning() << "Unable to initialize mesh renderer.";
     }
+    initializeGrid();
 
     setTopView();
     setProjectionMatrix();
 }
 
 void ViewPort::resizeGL(int w, int h) {
-    constexpr int marginToolBox = 24;
-    constexpr int marginFloatingPanel = 20;
+    constexpr int marginToolBar = 11;
+    constexpr int marginToolBox = 15;
 
-    if (!mToolBox) {
-        return;
-    };
-
-    const int xToolBox = w - marginToolBox - mToolBox->width();
-    const int yToolBox = marginToolBox;
-
-    mToolBox->move(std::max(0, xToolBox), std::max(0, yToolBox));
+    if (mToolBar != nullptr) {
+        mToolBar->move(marginToolBar, marginToolBar);
+    }
+    if (mToolBox != nullptr) {
+        const int xToolBox = w - marginToolBox - mToolBox->width();
+        const int yToolBox = marginToolBox;
+        mToolBox->move(std::max(0, xToolBox), std::max(0, yToolBox));
+    }
 
     setProjectionMatrix();
     update();
@@ -66,10 +71,10 @@ void ViewPort::paintGL() {
     QMatrix4x4 mvp = mProjectionMatrix * mViewMatrix;
 
     mProgram.bind();
-    mProgram.setUniformValue("uColor", QVector3D(0.90f, 0.90f, 0.90f));
-
     mProgram.setUniformValue("uMVP", mvp);
+    drawGrid();
 
+    mProgram.setUniformValue("uColor", QVector3D(0.90f, 0.90f, 0.90f));
     mMeshRenderer.draw();
 
     mMeshRenderer.release();
@@ -113,4 +118,73 @@ void ViewPort::setProjectionMatrix() {
     } else {
         mProjectionMatrix.ortho(-1.0f, 1.0f, -1.0f / aspect, 1.0f / aspect, -1.0f, 1.0f);
     }
+}
+
+void ViewPort::setGridVisible(bool visible) {
+    mGridVisible = visible;
+    update();
+}
+
+void ViewPort::initializeGrid() {
+    if (mGridInitialized) {
+        return;
+    }
+
+    if (!mGridVao.create()) {
+        qWarning() << "Failed to create grid vertex array object.";
+        return;
+    }
+    if (!mGridVbo.create()) {
+        qWarning() << "Failed to create grid vertex buffer.";
+        mGridVao.destroy();
+        return;
+    }
+    mGridVbo.setUsagePattern(QOpenGLBuffer::StaticDraw);
+
+    mGridVertices.clear();
+    constexpr float kHalfExtent = 1.8f;
+    constexpr float kStep = 0.1f;
+    for (float x = -kHalfExtent; x <= kHalfExtent + 1e-4f; x += kStep) {
+        mGridVertices.push_back(x);
+        mGridVertices.push_back(-kHalfExtent);
+        mGridVertices.push_back(x);
+        mGridVertices.push_back(kHalfExtent);
+    }
+    for (float y = -kHalfExtent; y <= kHalfExtent + 1e-4f; y += kStep) {
+        mGridVertices.push_back(-kHalfExtent);
+        mGridVertices.push_back(y);
+        mGridVertices.push_back(kHalfExtent);
+        mGridVertices.push_back(y);
+    }
+
+    mGridVao.bind();
+    mGridVbo.bind();
+    mGridVbo.allocate(mGridVertices.data(), static_cast<int>(mGridVertices.size() * sizeof(float)));
+    mProgram.enableAttributeArray(0);
+    mProgram.setAttributeBuffer(0, GL_FLOAT, 0, 2, 2 * sizeof(float));
+    mGridVbo.release();
+    mGridVao.release();
+
+    mGridInitialized = true;
+}
+
+void ViewPort::drawGrid() {
+    if (!mGridVisible || !mGridInitialized) {
+        return;
+    }
+    mProgram.setUniformValue("uColor", QVector3D(0.22f, 0.23f, 0.24f));
+    mGridVao.bind();
+    glLineWidth(1.0f);
+    glDrawArrays(GL_LINES, 0, static_cast<int>(mGridVertices.size() / 2));
+    mGridVao.release();
+}
+
+void ViewPort::destroyGrid() {
+    if (!mGridInitialized) {
+        return;
+    }
+    mGridVao.destroy();
+    mGridVbo.destroy();
+    mGridVertices.clear();
+    mGridInitialized = false;
 }
