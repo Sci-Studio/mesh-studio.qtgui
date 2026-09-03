@@ -1,7 +1,7 @@
 #include "MeshExplorer.hpp"
 
+#include <QFontMetrics>
 #include <QLocale>
-#include <qglobal.h>
 
 MeshExplorer::MeshExplorer(QWidget* parent) : QFrame(parent) {
     setObjectName("ms-mesh-explorer");
@@ -142,11 +142,16 @@ void MeshExplorer::setCurrentFileName(const QString& fileName) {
         mChevronButton->setIcon(QIcon(mChevronRightIcon));
         return;
     }
-    mFileNameLabel->setText(trimmedFileName);
+    const QFontMetrics metrics(mFileNameLabel->font());
+    const int availableWidth = mFileNameLabel->width() > 0 ? mFileNameLabel->width() : 1;
+    const QString elidedFileName =
+        metrics.elidedText(trimmedFileName, Qt::ElideRight, availableWidth);
+    mFileNameLabel->setText(elidedFileName);
     mChevronButton->setEnabled(true);
     setGeometryFrameVisible(true);
     setGeometryExpanded(true);
     mChevronButton->setIcon(QIcon(mChevronDownIcon));
+    mFileNameLabel->setToolTip(trimmedFileName);
 }
 
 void MeshExplorer::setRowLabelValue(QLabel* label, unsigned int value) {
