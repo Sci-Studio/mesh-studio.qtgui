@@ -16,11 +16,14 @@ class MeshExplorer : public QFrame {
 
   private:
     QLabel* mFileNameLabel = nullptr;
+    QLabel* mChevronLabel = nullptr;
     QLabel* mPointsValueLabel = nullptr;
     QLabel* mConstraintsValueLabel = nullptr;
     QLabel* mTrianglesValueLabel = nullptr;
+    QFrame* mGeometryFrame = nullptr;
 
-    void updateCounterLabel(QLabel* label, unsigned int value);
+    void setGeometryFrameVisible(bool visible);
+    void setRowLabelValue(QLabel* label, unsigned int value);
     void createHeader(QVBoxLayout* rootLayout);
     void createGeometryStats(QVBoxLayout* rootLayout);
     void createDivider(QVBoxLayout* geometryLayout, QFrame* geometryFrame,

@@ -1,6 +1,7 @@
 #include "MeshExplorer.hpp"
 
 #include <QLocale>
+#include <qglobal.h>
 
 MeshExplorer::MeshExplorer(QWidget* parent) : QFrame(parent) {
     setObjectName("ms-mesh-explorer");
@@ -45,41 +46,44 @@ void MeshExplorer::createHeader(QVBoxLayout* rootLayout) {
     mFileNameLabel->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     headerLayout->addWidget(mFileNameLabel, 1);
 
-    auto* chevronLabel = new QLabel(headerFrame);
-    chevronLabel->setObjectName("ms-mesh-explorer-chevron");
-    chevronLabel->setFixedSize(12, 12);
-    chevronLabel->setPixmap(
+    mChevronLabel = new QLabel(headerFrame);
+    mChevronLabel->setObjectName("ms-mesh-explorer-chevron");
+    mChevronLabel->setFixedSize(12, 12);
+    mChevronLabel->setPixmap(
         QPixmap(":/svg/Chevron_24.svg")
-            .scaled(chevronLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    chevronLabel->setAttribute(Qt::WA_TranslucentBackground, true);
-    headerLayout->addWidget(chevronLabel, 0, Qt::AlignVCenter);
+            .scaled(mChevronLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    mChevronLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    mChevronLabel->setVisible(false);
+
+    headerLayout->addWidget(mChevronLabel, 0, Qt::AlignVCenter);
 
     rootLayout->addWidget(headerFrame);
 }
 
 void MeshExplorer::createGeometryStats(QVBoxLayout* rootLayout) {
-    auto* geometryFrame = new QFrame(this);
-    geometryFrame->setObjectName("ms-mesh-explorer-geometry");
-    geometryFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    mGeometryFrame = new QFrame(this);
+    mGeometryFrame->setObjectName("ms-mesh-explorer-geometry");
+    mGeometryFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-    auto* geometryLayout = new QVBoxLayout(geometryFrame);
+    auto* geometryLayout = new QVBoxLayout(mGeometryFrame);
     geometryLayout->setContentsMargins(0, 6, 0, 6);
     geometryLayout->setSpacing(0);
 
-    auto* sectionHeader = new QLabel("GEOMETRY", geometryFrame);
+    auto* sectionHeader = new QLabel("GEOMETRY", mGeometryFrame);
     sectionHeader->setObjectName("ms-mesh-explorer-section-title");
     sectionHeader->setContentsMargins(10, 4, 10, 6);
     geometryLayout->addWidget(sectionHeader);
 
     geometryLayout->addWidget(createStatRow(":/svg/Points_24.svg", "Points", mPointsValueLabel));
-    createDivider(geometryLayout, geometryFrame, "points");
+    createDivider(geometryLayout, mGeometryFrame, "points");
     geometryLayout->addWidget(
         createStatRow(":/svg/Constraints_24.svg", "Constraints", mConstraintsValueLabel));
-    createDivider(geometryLayout, geometryFrame, "constraints");
+    createDivider(geometryLayout, mGeometryFrame, "constraints");
     geometryLayout->addWidget(
         createStatRow(":/svg/Triangle_24.svg", "Triangles", mTrianglesValueLabel));
 
-    rootLayout->addWidget(geometryFrame);
+    setGeometryFrameVisible(false);
+    rootLayout->addWidget(mGeometryFrame);
 }
 
 void MeshExplorer::createDivider(QVBoxLayout* geometryLayout, QFrame* geometryFrame,
@@ -124,10 +128,20 @@ void MeshExplorer::setCurrentFileName(const QString& fileName) {
     if (mFileNameLabel == nullptr) {
         return;
     }
+    QString trimmedFileName;
+    if (fileName.isEmpty()) {
+        qWarning() << "Empty file name";
+        mFileNameLabel->setText(QStringLiteral("No File Selected"));
+        mChevronLabel->setVisible(false);
+        setGeometryFrameVisible(false);
+        return;
+    }
     mFileNameLabel->setText(fileName);
+    mChevronLabel->setVisible(true);
+    setGeometryFrameVisible(true);
 }
 
-void MeshExplorer::updateCounterLabel(QLabel* label, unsigned int value) {
+void MeshExplorer::setRowLabelValue(QLabel* label, unsigned int value) {
     if (label == nullptr) {
         return;
     }
@@ -135,13 +149,20 @@ void MeshExplorer::updateCounterLabel(QLabel* label, unsigned int value) {
 }
 
 void MeshExplorer::setPointsValueLabel(unsigned int points) {
-    updateCounterLabel(mPointsValueLabel, points);
+    setRowLabelValue(mPointsValueLabel, points);
 }
 
 void MeshExplorer::setConstraintsValueLabel(unsigned int constraints) {
-    updateCounterLabel(mConstraintsValueLabel, constraints);
+    setRowLabelValue(mConstraintsValueLabel, constraints);
 }
 
 void MeshExplorer::setTrianglesValueLabel(unsigned int triangles) {
-    updateCounterLabel(mTrianglesValueLabel, triangles);
+    setRowLabelValue(mTrianglesValueLabel, triangles);
+}
+
+void MeshExplorer::setGeometryFrameVisible(bool visible) {
+    if (mGeometryFrame == nullptr) {
+        return;
+    }
+    mGeometryFrame->setVisible(visible);
 }
