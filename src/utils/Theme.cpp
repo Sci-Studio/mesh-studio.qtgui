@@ -15,7 +15,7 @@ QString Theme::loadStyleSheet(const QString& resourcePath) {
 
 void Theme::apply(QApplication& app) {
     const QStringList styleFiles = {":/styles/tokens.qss", ":/styles/app.qss",
-                                    ":/styles/ToolBox.qss", ":/styles/ToolBar.qss",
+                                    ":/styles/RotateControls.qss", ":/styles/ToolBar.qss",
                                     ":/styles/MeshExplorer.qss", ":/styles/ViewPort.qss"};
 
     QString styleSheet;

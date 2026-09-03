@@ -1,7 +1,6 @@
 #include "ViewPort.hpp"
 #include "../utils/Shader.hpp"
 
-#include <QDebug>
 #include <QPainterPath>
 #include <QRegion>
 #include <QVector3D>
@@ -12,14 +11,17 @@ ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
     setAttribute(Qt::WA_StyledBackground, true);
 
     mToolBar = new ToolBar(this);
-    mToolBox = new ToolBox(this);
+    mRotateControls = new RotateControls(this);
+    mAxisIndicator = new AxisIndicator(this);
     mToolBar->setGridEnabled(mGridVisible);
     mToolBar->setTriangulateEnabled(false);
+    mAxisIndicator->setRotationDegrees(mModelRotationDegrees);
 
-    connect(mToolBar, &ToolBar::triangulateClicked, this, [this]() { emit triangulateRequested(); });
+    connect(mToolBar, &ToolBar::triangulateClicked, this,
+            [this]() { emit triangulateRequested(); });
     connect(mToolBar, &ToolBar::gridToggled, this, &ViewPort::setGridVisible);
-    connect(mToolBox, &ToolBox::onTopViewClicked, this, &ViewPort::setTopView);
-    connect(mToolBox, &ToolBox::onIsoViewClicked, this, &ViewPort::setIsoView);
+    connect(mRotateControls, &RotateControls::rotateCcwClicked, this, &ViewPort::rotateModelCcw);
+    connect(mRotateControls, &RotateControls::rotateCwClicked, this, &ViewPort::rotateModelCw);
 }
 
 ViewPort::~ViewPort() {
@@ -44,21 +46,28 @@ void ViewPort::initializeGL() {
     }
     initializeGrid();
 
-    setTopView();
+    mViewMatrix.setToIdentity();
     setProjectionMatrix();
 }
 
 void ViewPort::resizeGL(int w, int h) {
     constexpr int marginToolBar = 11;
-    constexpr int marginToolBox = 15;
+    constexpr int marginRotateControls = 15;
+    constexpr int marginAxisLeft = 12;
+    constexpr int marginAxisBottom = 20;
 
     if (mToolBar != nullptr) {
         mToolBar->move(marginToolBar, marginToolBar);
     }
-    if (mToolBox != nullptr) {
-        const int xToolBox = w - marginToolBox - mToolBox->width();
-        const int yToolBox = marginToolBox;
-        mToolBox->move(std::max(0, xToolBox), std::max(0, yToolBox));
+    if (mRotateControls != nullptr) {
+        const int xRotateControls = w - marginRotateControls - mRotateControls->width();
+        const int yRotateControls = marginRotateControls;
+        mRotateControls->move(std::max(0, xRotateControls), std::max(0, yRotateControls));
+    }
+    if (mAxisIndicator != nullptr) {
+        const int xAxis = marginAxisLeft;
+        const int yAxis = h - marginAxisBottom - mAxisIndicator->height();
+        mAxisIndicator->move(std::max(0, xAxis), std::max(0, yAxis));
     }
     applyRoundedMask();
 
@@ -75,12 +84,13 @@ void ViewPort::paintGL() {
         mMeshUploadPending = false;
     }
 
-    QMatrix4x4 mvp = mProjectionMatrix * mViewMatrix;
-
     mProgram.bind();
-    mProgram.setUniformValue("uMVP", mvp);
+    // Keep the grid anchored in world space while only rotating the model.
+    mProgram.setUniformValue("uMVP", mProjectionMatrix);
     drawGrid();
 
+    QMatrix4x4 mvp = mProjectionMatrix * mViewMatrix;
+    mProgram.setUniformValue("uMVP", mvp);
     mProgram.setUniformValue("uColor", QVector3D(0.90f, 0.90f, 0.90f));
     mMeshRenderer.draw();
 
@@ -95,24 +105,26 @@ void ViewPort::setBackgroundColor(const QColor& color) {
 
 void ViewPort::setMesh(const UIMesh& uiMesh) {
     mUIMesh = uiMesh;
-    qDebug() << "ViewPort mesh updated. points:" << mUIMesh.points().size()
-             << "constraints:" << mUIMesh.constraints().size();
     mMeshUploadPending = true;
     updateToolbarStates();
     update();
 }
 
-void ViewPort::setTopView() {
-    mViewMatrix.setToIdentity();
+void ViewPort::rotateModelCcw() {
+    mViewMatrix.rotate(90.0f, QVector3D(0.0f, 0.0f, 1.0f));
+    mModelRotationDegrees += 90.0f;
+    if (mAxisIndicator != nullptr) {
+        mAxisIndicator->setRotationDegrees(mModelRotationDegrees);
+    }
     update();
 }
 
-void ViewPort::setIsoView() {
-    mViewMatrix.setToIdentity();
-    // For a flat XY sketch (z=0), a FreeCAD-like isometric look is best
-    // approximated by in-plane spin + tilt instead of pure X/Y yaw-pitch.
-    mViewMatrix.rotate(-45.0f, QVector3D(0.0f, 0.0f, 1.0f));
-    mViewMatrix.rotate(54.7356f, QVector3D(1.0f, 0.0f, 0.0f));
+void ViewPort::rotateModelCw() {
+    mViewMatrix.rotate(-90.0f, QVector3D(0.0f, 0.0f, 1.0f));
+    mModelRotationDegrees -= 90.0f;
+    if (mAxisIndicator != nullptr) {
+        mAxisIndicator->setRotationDegrees(mModelRotationDegrees);
+    }
     update();
 }
 
