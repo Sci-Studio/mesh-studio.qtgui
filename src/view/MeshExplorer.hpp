@@ -22,6 +22,7 @@ class MeshExplorer : public QFrame {
     QLabel* mPointsValueLabel = nullptr;
     QLabel* mConstraintsValueLabel = nullptr;
     QLabel* mTrianglesValueLabel = nullptr;
+    QFrame* mHeaderFrame = nullptr;
     QFrame* mGeometryFrame = nullptr;
     QPixmap mChevronDownIcon;
     QPixmap mChevronRightIcon;

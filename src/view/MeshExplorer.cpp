@@ -21,17 +21,17 @@ MeshExplorer::MeshExplorer(QWidget* parent) : QFrame(parent) {
 }
 
 void MeshExplorer::createHeader(QVBoxLayout* rootLayout) {
-    auto* headerFrame = new QFrame(this);
-    headerFrame->setObjectName("ms-mesh-explorer-header");
-    headerFrame->setAttribute(Qt::WA_StyledBackground, true);
-    headerFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    headerFrame->setFixedHeight(50);
+    mHeaderFrame = new QFrame(this);
+    mHeaderFrame->setObjectName("ms-mesh-explorer-header");
+    mHeaderFrame->setAttribute(Qt::WA_StyledBackground, true);
+    mHeaderFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    mHeaderFrame->setFixedHeight(50);
 
-    auto* headerLayout = new QHBoxLayout(headerFrame);
+    auto* headerLayout = new QHBoxLayout(mHeaderFrame);
     headerLayout->setContentsMargins(16, 16, 16, 16);
     headerLayout->setSpacing(12);
 
-    mChevronButton = new QToolButton(headerFrame);
+    mChevronButton = new QToolButton(mHeaderFrame);
     mChevronButton->setObjectName("ms-mesh-explorer-chevron-btn");
     mChevronButton->setFixedSize(12, 12);
     mChevronButton->setVisible(true);
@@ -44,7 +44,7 @@ void MeshExplorer::createHeader(QVBoxLayout* rootLayout) {
     mChevronButton->setIcon(QIcon(mChevronDownIcon));
     headerLayout->addWidget(mChevronButton, 0, Qt::AlignVCenter);
 
-    auto* fileIconLabel = new QLabel(headerFrame);
+    auto* fileIconLabel = new QLabel(mHeaderFrame);
     fileIconLabel->setObjectName("ms-mesh-explorer-file-icon");
     fileIconLabel->setFixedSize(14, 17);
     fileIconLabel->setPixmap(
@@ -53,7 +53,7 @@ void MeshExplorer::createHeader(QVBoxLayout* rootLayout) {
     fileIconLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     headerLayout->addWidget(fileIconLabel, 0, Qt::AlignVCenter);
 
-    mFileNameLabel = new QLabel("No File Selected", headerFrame);
+    mFileNameLabel = new QLabel("No File Selected", mHeaderFrame);
     mFileNameLabel->setObjectName("ms-mesh-explorer-file-name");
     mFileNameLabel->setAttribute(Qt::WA_StyledBackground, true);
     mFileNameLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -62,7 +62,7 @@ void MeshExplorer::createHeader(QVBoxLayout* rootLayout) {
 
     connect(mChevronButton, &QToolButton::clicked, this, &MeshExplorer::toggleGeometryVisibility);
 
-    rootLayout->addWidget(headerFrame);
+    rootLayout->addWidget(mHeaderFrame);
 }
 
 void MeshExplorer::createGeometryStats(QVBoxLayout* rootLayout) {
@@ -140,6 +140,10 @@ void MeshExplorer::setCurrentFileName(const QString& fileName) {
         setGeometryFrameVisible(false);
         setGeometryExpanded(false);
         mChevronButton->setIcon(QIcon(mChevronRightIcon));
+        mFileNameLabel->setToolTip(QString());
+        if (mHeaderFrame != nullptr) {
+            mHeaderFrame->setToolTip(QStringLiteral("Open a new file"));
+        }
         return;
     }
     const QFontMetrics metrics(mFileNameLabel->font());
@@ -152,6 +156,9 @@ void MeshExplorer::setCurrentFileName(const QString& fileName) {
     setGeometryExpanded(true);
     mChevronButton->setIcon(QIcon(mChevronDownIcon));
     mFileNameLabel->setToolTip(trimmedFileName);
+    if (mHeaderFrame != nullptr) {
+        mHeaderFrame->setToolTip(QString());
+    }
 }
 
 void MeshExplorer::setRowLabelValue(QLabel* label, unsigned int value) {
