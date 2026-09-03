@@ -73,7 +73,6 @@ qt_add_resources(MeshGenQtApp style_resources
         res/styles/tokens.qss
         res/styles/app.qss
         res/styles/ToolBox.qss
-        res/styles/FloatingPanel.qss
         res/styles/MeshExplorer.qss
 )
 
