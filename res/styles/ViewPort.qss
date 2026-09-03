@@ -1,0 +1,5 @@
+QOpenGLWidget#ms-view-port {
+    background-color: #262a2b;
+    border: 1px solid #4447484d;
+    border-radius: 8px;
+}

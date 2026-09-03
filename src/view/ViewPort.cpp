@@ -2,13 +2,19 @@
 #include "../utils/Shader.hpp"
 
 #include <QDebug>
+#include <QPainterPath>
+#include <QRegion>
 #include <QVector3D>
 #include <algorithm>
 
 ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
+    setObjectName("ms-view-port");
+    setAttribute(Qt::WA_StyledBackground, true);
+
     mToolBar = new ToolBar(this);
     mToolBox = new ToolBox(this);
     mToolBar->setGridEnabled(mGridVisible);
+    mToolBar->setTriangulateEnabled(false);
 
     connect(mToolBar, &ToolBar::triangulateClicked, this, [this]() { emit triangulateRequested(); });
     connect(mToolBar, &ToolBar::gridToggled, this, &ViewPort::setGridVisible);
@@ -54,6 +60,7 @@ void ViewPort::resizeGL(int w, int h) {
         const int yToolBox = marginToolBox;
         mToolBox->move(std::max(0, xToolBox), std::max(0, yToolBox));
     }
+    applyRoundedMask();
 
     setProjectionMatrix();
     update();
@@ -91,6 +98,7 @@ void ViewPort::setMesh(const UIMesh& uiMesh) {
     qDebug() << "ViewPort mesh updated. points:" << mUIMesh.points().size()
              << "constraints:" << mUIMesh.constraints().size();
     mMeshUploadPending = true;
+    updateToolbarStates();
     update();
 }
 
@@ -187,4 +195,28 @@ void ViewPort::destroyGrid() {
     mGridVbo.destroy();
     mGridVertices.clear();
     mGridInitialized = false;
+}
+
+void ViewPort::applyRoundedMask() {
+    if (width() <= 0 || height() <= 0) {
+        clearMask();
+        return;
+    }
+
+    constexpr qreal kCornerRadius = 8.0;
+    QRectF roundedRect = rect();
+    roundedRect.adjust(0.5, 0.5, -0.5, -0.5);
+
+    QPainterPath clipPath;
+    clipPath.addRoundedRect(roundedRect, kCornerRadius, kCornerRadius);
+    setMask(QRegion(clipPath.toFillPolygon().toPolygon()));
+}
+
+void ViewPort::updateToolbarStates() {
+    if (mToolBar == nullptr) {
+        return;
+    }
+    const bool hasMesh = !mUIMesh.pointsReal().empty();
+    const bool alreadyTriangulated = !mUIMesh.triangles().empty();
+    mToolBar->setTriangulateEnabled(hasMesh && !alreadyTriangulated);
 }

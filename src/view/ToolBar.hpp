@@ -11,6 +11,7 @@ class ToolBar : public QFrame {
     explicit ToolBar(QWidget* parent = nullptr);
 
     void setGridEnabled(bool enabled);
+    void setTriangulateEnabled(bool enabled);
 
   signals:
     void triangulateClicked();

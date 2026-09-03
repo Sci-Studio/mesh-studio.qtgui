@@ -50,3 +50,10 @@ void ToolBar::setGridEnabled(bool enabled) {
     }
     mGridToggleButton->setChecked(enabled);
 }
+
+void ToolBar::setTriangulateEnabled(bool enabled) {
+    if (mTriangulateButton == nullptr) {
+        return;
+    }
+    mTriangulateButton->setEnabled(enabled);
+}

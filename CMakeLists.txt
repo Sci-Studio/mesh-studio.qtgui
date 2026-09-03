@@ -77,6 +77,7 @@ qt_add_resources(MeshGenQtApp style_resources
         res/styles/ToolBox.qss
         res/styles/ToolBar.qss
         res/styles/MeshExplorer.qss
+        res/styles/ViewPort.qss
 )
 
 qt_add_resources(MeshGenQtApp "icons"

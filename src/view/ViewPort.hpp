@@ -10,6 +10,7 @@
 #include <QOpenGLFunctions>
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLWidget>
+#include <QRegion>
 #include <vector>
 
 class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
@@ -58,4 +59,6 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     void initializeGrid();
     void destroyGrid();
     void drawGrid();
+    void applyRoundedMask();
+    void updateToolbarStates();
 };
