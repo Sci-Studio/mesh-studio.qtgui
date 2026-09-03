@@ -31,7 +31,7 @@ RotateControls::RotateControls(QWidget* parent) : QFrame(parent) {
     mRotateCcwButton->setFixedSize(36, 31);
     mRotateCcwButton->setIcon(QIcon(":/svg/Rotate_CCW_24.svg"));
     mRotateCcwButton->setIconSize(QSize(24, 24));
-    mRotateCcwButton->setToolTip("Rotate 45° CCW");
+    mRotateCcwButton->setToolTip("Rotate 90° CCW");
     mRotateCcwButton->setAutoRaise(true);
     rowLayout->addWidget(mRotateCcwButton, 0, Qt::AlignVCenter);
 
@@ -45,7 +45,7 @@ RotateControls::RotateControls(QWidget* parent) : QFrame(parent) {
     mRotateCwButton->setFixedSize(36, 31);
     mRotateCwButton->setIcon(QIcon(":/svg/Rotate_CW_24.svg"));
     mRotateCwButton->setIconSize(QSize(24, 24));
-    mRotateCwButton->setToolTip("Rotate 45° CW");
+    mRotateCwButton->setToolTip("Rotate 90° CW");
     mRotateCwButton->setAutoRaise(true);
     rowLayout->addWidget(mRotateCwButton, 0, Qt::AlignVCenter);
 

@@ -44,6 +44,8 @@ qt_add_executable(MeshGenQtApp
     src/view/MeshRenderer.hpp
     src/view/ViewPort.cpp
     src/view/ViewPort.hpp
+    src/view/AxisIndicator.cpp
+    src/view/AxisIndicator.hpp
     src/view/MeshExplorer.cpp
     src/view/MeshExplorer.hpp
     src/view/RotateControls.cpp

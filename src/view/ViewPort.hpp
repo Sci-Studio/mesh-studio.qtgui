@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../model/UIMesh.hpp"
+#include "AxisIndicator.hpp"
 #include "MeshRenderer.hpp"
 #include "RotateControls.hpp"
 #include "ToolBar.hpp"
@@ -49,8 +50,10 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     MeshRenderer mMeshRenderer;
     ToolBar* mToolBar = nullptr;
     RotateControls* mRotateControls = nullptr;
+    AxisIndicator* mAxisIndicator = nullptr;
     bool mGridVisible = true;
     bool mGridInitialized = false;
+    float mModelRotationDegrees = 0.0f;
     std::vector<float> mGridVertices;
     QOpenGLVertexArrayObject mGridVao;
     QOpenGLBuffer mGridVbo{QOpenGLBuffer::VertexBuffer};
