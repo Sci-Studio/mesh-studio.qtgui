@@ -78,7 +78,6 @@ void MeshExplorer::createGeometryStats(QVBoxLayout* rootLayout) {
     createDivider(geometryLayout, geometryFrame, "constraints");
     geometryLayout->addWidget(
         createStatRow(":/svg/Triangle_24.svg", "Triangles", mTrianglesValueLabel));
-    createDivider(geometryLayout, geometryFrame, "triangles");
 
     rootLayout->addWidget(geometryFrame);
 }
