@@ -1,7 +1,6 @@
 #include "ViewPort.hpp"
 #include "../utils/Shader.hpp"
 
-#include <QDebug>
 #include <QPainterPath>
 #include <QRegion>
 #include <QVector3D>
@@ -18,7 +17,8 @@ ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
     mToolBar->setTriangulateEnabled(false);
     mAxisIndicator->setRotationDegrees(mModelRotationDegrees);
 
-    connect(mToolBar, &ToolBar::triangulateClicked, this, [this]() { emit triangulateRequested(); });
+    connect(mToolBar, &ToolBar::triangulateClicked, this,
+            [this]() { emit triangulateRequested(); });
     connect(mToolBar, &ToolBar::gridToggled, this, &ViewPort::setGridVisible);
     connect(mRotateControls, &RotateControls::rotateCcwClicked, this, &ViewPort::rotateModelCcw);
     connect(mRotateControls, &RotateControls::rotateCwClicked, this, &ViewPort::rotateModelCw);
@@ -105,8 +105,6 @@ void ViewPort::setBackgroundColor(const QColor& color) {
 
 void ViewPort::setMesh(const UIMesh& uiMesh) {
     mUIMesh = uiMesh;
-    qDebug() << "ViewPort mesh updated. points:" << mUIMesh.points().size()
-             << "constraints:" << mUIMesh.constraints().size();
     mMeshUploadPending = true;
     updateToolbarStates();
     update();

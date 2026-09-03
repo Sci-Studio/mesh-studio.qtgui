@@ -51,7 +51,7 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     ToolBar* mToolBar = nullptr;
     RotateControls* mRotateControls = nullptr;
     AxisIndicator* mAxisIndicator = nullptr;
-    bool mGridVisible = true;
+    bool mGridVisible = false;
     bool mGridInitialized = false;
     float mModelRotationDegrees = 0.0f;
     std::vector<float> mGridVertices;
