@@ -12,10 +12,8 @@ class ToolBox : public QFrame {
   signals:
     void onTopViewClicked();
     void onIsoViewClicked();
-    void onTriangulateClicked();
 
   private:
     QPushButton* mTopViewButton = nullptr;
     QPushButton* mIsoViewButton = nullptr;
-    QPushButton* mTriangulateButton = nullptr;
 };

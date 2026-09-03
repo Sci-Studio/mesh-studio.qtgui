@@ -1,0 +1,26 @@
+QFrame#ms-viewport-toolbar {
+    background-color: #1e2020;
+    border: 1px solid #4447484d;
+    border-radius: 8px;
+}
+
+QFrame#ms-viewport-toolbar-divider {
+    background-color: #4447484d;
+    border: 0;
+}
+
+QToolButton#ms-viewport-toolbar-triangulate,
+QToolButton#ms-viewport-toolbar-grid {
+    background-color: transparent;
+    border: 0;
+    border-radius: 6px;
+}
+
+QToolButton#ms-viewport-toolbar-triangulate:hover,
+QToolButton#ms-viewport-toolbar-grid:hover {
+    background-color: rgba(58, 134, 255, 45);
+}
+
+QToolButton#ms-viewport-toolbar-grid:checked {
+    background-color: rgba(58, 134, 255, 60);
+}

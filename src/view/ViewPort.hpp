@@ -2,11 +2,16 @@
 
 #include "../model/UIMesh.hpp"
 #include "MeshRenderer.hpp"
+#include "ToolBar.hpp"
 #include "ToolBox.hpp"
 
 #include <QColor>
+#include <QOpenGLBuffer>
 #include <QOpenGLFunctions>
+#include <QOpenGLVertexArrayObject>
 #include <QOpenGLWidget>
+#include <QRegion>
+#include <vector>
 
 class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     Q_OBJECT
@@ -31,6 +36,7 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
   private slots:
     void setTopView();
     void setIsoView();
+    void setGridVisible(bool visible);
 
   private:
     QColor mBackground{QColor::fromRgb(30, 30, 30)};
@@ -41,7 +47,18 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
 
     QOpenGLShaderProgram mProgram;
     MeshRenderer mMeshRenderer;
+    ToolBar* mToolBar = nullptr;
     ToolBox* mToolBox = nullptr;
+    bool mGridVisible = true;
+    bool mGridInitialized = false;
+    std::vector<float> mGridVertices;
+    QOpenGLVertexArrayObject mGridVao;
+    QOpenGLBuffer mGridVbo{QOpenGLBuffer::VertexBuffer};
 
     void setProjectionMatrix();
+    void initializeGrid();
+    void destroyGrid();
+    void drawGrid();
+    void applyRoundedMask();
+    void updateToolbarStates();
 };
