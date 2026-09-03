@@ -86,6 +86,7 @@ qt_add_resources(MeshGenQtApp "icons"
         res/svg/Triangulate_24.svg
         res/svg/Rotate_CCW_24.svg
         res/svg/Rotate_CW_24.svg
+        res/svg/Chevron_24.svg
 )
 
 target_link_libraries(MeshGenQtApp

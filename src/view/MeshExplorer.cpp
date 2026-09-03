@@ -32,6 +32,7 @@ void MeshExplorer::createHeader(QVBoxLayout* rootLayout) {
     fileIconLabel->setPixmap(
         QPixmap(":/svg/File_24.svg")
             .scaled(fileIconLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    fileIconLabel->setAttribute(Qt::WA_TranslucentBackground, true);
     headerLayout->addWidget(fileIconLabel, 0, Qt::AlignVCenter);
 
     mFileNameLabel = new QLabel("No File Selected", headerFrame);
@@ -40,6 +41,15 @@ void MeshExplorer::createHeader(QVBoxLayout* rootLayout) {
     mFileNameLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     mFileNameLabel->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     headerLayout->addWidget(mFileNameLabel, 1);
+
+    auto* chevronLabel = new QLabel(headerFrame);
+    chevronLabel->setObjectName("ms-mesh-explorer-chevron");
+    chevronLabel->setFixedSize(12, 12);
+    chevronLabel->setPixmap(
+        QPixmap(":/svg/Chevron_24.svg")
+            .scaled(chevronLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    chevronLabel->setAttribute(Qt::WA_TranslucentBackground, true);
+    headerLayout->addWidget(chevronLabel, 0, Qt::AlignVCenter);
 
     rootLayout->addWidget(headerFrame);
 }
