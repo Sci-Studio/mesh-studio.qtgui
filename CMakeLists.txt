@@ -46,10 +46,10 @@ qt_add_executable(MeshGenQtApp
     src/view/ViewPort.hpp
     src/view/MeshExplorer.cpp
     src/view/MeshExplorer.hpp
+    src/view/RotateControls.cpp
+    src/view/RotateControls.hpp
     src/view/ToolBar.cpp
     src/view/ToolBar.hpp
-    src/view/ToolBox.cpp
-    src/view/ToolBox.hpp
     src/utils/Theme.cpp
     src/utils/Theme.hpp
     src/utils/Shader.cpp
@@ -74,7 +74,7 @@ qt_add_resources(MeshGenQtApp style_resources
     FILES
         res/styles/tokens.qss
         res/styles/app.qss
-        res/styles/ToolBox.qss
+        res/styles/RotateControls.qss
         res/styles/ToolBar.qss
         res/styles/MeshExplorer.qss
         res/styles/ViewPort.qss

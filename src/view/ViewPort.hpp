@@ -2,8 +2,8 @@
 
 #include "../model/UIMesh.hpp"
 #include "MeshRenderer.hpp"
+#include "RotateControls.hpp"
 #include "ToolBar.hpp"
-#include "ToolBox.hpp"
 
 #include <QColor>
 #include <QOpenGLBuffer>
@@ -34,8 +34,8 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     void triangulateRequested();
 
   private slots:
-    void setTopView();
-    void setIsoView();
+    void rotateModelCcw();
+    void rotateModelCw();
     void setGridVisible(bool visible);
 
   private:
@@ -48,7 +48,7 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     QOpenGLShaderProgram mProgram;
     MeshRenderer mMeshRenderer;
     ToolBar* mToolBar = nullptr;
-    ToolBox* mToolBox = nullptr;
+    RotateControls* mRotateControls = nullptr;
     bool mGridVisible = true;
     bool mGridInitialized = false;
     std::vector<float> mGridVertices;
