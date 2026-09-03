@@ -15,15 +15,12 @@ class MeshExplorer : public QFrame {
     void setTrianglesValueLabel(const unsigned int points);
 
   private:
-    unsigned int mPoints;
-    unsigned int mConstraints;
-    unsigned int mTriangles;
-
     QLabel* mFileNameLabel = nullptr;
     QLabel* mPointsValueLabel = nullptr;
     QLabel* mConstraintsValueLabel = nullptr;
     QLabel* mTrianglesValueLabel = nullptr;
 
+    void updateCounterLabel(QLabel* label, unsigned int value);
     void createHeader(QVBoxLayout* rootLayout);
     void createGeometryStats(QVBoxLayout* rootLayout);
     void createDivider(QVBoxLayout* geometryLayout, QFrame* geometryFrame,

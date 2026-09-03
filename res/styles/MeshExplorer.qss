@@ -16,3 +16,34 @@ QLabel#ms-mesh-explorer-file-name {
     font-size: 12px;
     font-weight: 500;
 }
+
+QLabel#ms-mesh-explorer-section-title {
+    color: #c4c7c7; /* on-surface-variant */
+    font-family: "Inter";
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+}
+
+QFrame#ms-mesh-explorer-stat-row {
+    background-color: transparent;
+}
+
+QLabel#ms-mesh-explorer-stat-label {
+    color: #c4c7c7; /* on-surface-variant */
+    font-family: "Inter";
+    font-size: 11px;
+    font-weight: 400;
+}
+
+QLabel#ms-mesh-explorer-stat-value {
+    color: #e2e2e2; /* on-surface */
+    font-family: "JetBrains Mono";
+    font-size: 12px;
+    font-weight: 500;
+}
+
+QFrame#ms-mesh-explorer-divider {
+    background-color: #4447484d; /* outline-variant 30% */
+    border: 0;
+}

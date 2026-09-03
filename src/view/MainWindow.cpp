@@ -29,6 +29,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
 void MainWindow::setRenderMesh(const UIMesh& mesh) {
     mViewPort->setMesh(mesh);
+    mMeshExplorer->setPointsValueLabel(static_cast<unsigned int>(mesh.pointsReal().size()));
+    mMeshExplorer->setConstraintsValueLabel(static_cast<unsigned int>(mesh.constraints().size()));
+    mMeshExplorer->setTrianglesValueLabel(static_cast<unsigned int>(mesh.triangles().size()));
 }
 
 void MainWindow::setWarningMessage(const QString& warning) {
