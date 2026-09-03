@@ -1,0 +1,67 @@
+QFrame#ms-mesh-explorer {
+    background-color: #1a1c1c; /* surface-container-low */
+    border: 1px solid #44474866;
+    border-radius: 8px; 
+}
+
+QFrame#ms-mesh-explorer-header {
+    background-color: #4447484d; /* outline-variant 30% */
+    border-bottom: 1px solid #44474880; /* outline-variant 50% */
+}
+
+QLabel#ms-mesh-explorer-file-name {
+    background-color: transparent;
+    color: #e2e2e2; /* on-surface */
+    font-family: "JetBrains Mono";
+    font-size: 12px;
+    font-weight: 500;
+}
+
+QToolButton#ms-mesh-explorer-chevron-btn {
+    background-color: transparent;
+    border: 0;
+    min-width: 12px;
+    min-height: 12px;
+    padding: 0;
+}
+
+QToolButton#ms-mesh-explorer-chevron-btn:hover {
+    background-color: transparent;
+    border: 0;
+}
+
+QToolButton#ms-mesh-explorer-chevron-btn:pressed {
+    background-color: transparent;
+    border: 0;
+}
+
+QLabel#ms-mesh-explorer-section-title {
+    color: #c4c7c7; /* on-surface-variant */
+    font-family: "Inter";
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+}
+
+QFrame#ms-mesh-explorer-stat-row {
+    background-color: transparent;
+}
+
+QLabel#ms-mesh-explorer-stat-label {
+    color: #c4c7c7; /* on-surface-variant */
+    font-family: "Inter";
+    font-size: 11px;
+    font-weight: 400;
+}
+
+QLabel#ms-mesh-explorer-stat-value {
+    color: #e2e2e2; /* on-surface */
+    font-family: "JetBrains Mono";
+    font-size: 12px;
+    font-weight: 500;
+}
+
+QFrame#ms-mesh-explorer-divider {
+    background-color: #4447484d; /* outline-variant 30% */
+    border: 0;
+}

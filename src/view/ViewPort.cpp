@@ -5,7 +5,6 @@
 #include <QVector3D>
 
 ViewPort::ViewPort(QWidget* parent) : QOpenGLWidget(parent) {
-    mFloatingConfigPanel = new FloatingPanel(this);
     mToolBox = new ToolBox(this);
 
     connect(mToolBox, &ToolBox::onTopViewClicked, this, &ViewPort::setTopView);
@@ -49,7 +48,6 @@ void ViewPort::resizeGL(int w, int h) {
     const int xToolBox = w - marginToolBox - mToolBox->width();
     const int yToolBox = marginToolBox;
 
-    mFloatingConfigPanel->move(marginFloatingPanel, marginFloatingPanel);
     mToolBox->move(std::max(0, xToolBox), std::max(0, yToolBox));
 
     setProjectionMatrix();
@@ -81,14 +79,6 @@ void ViewPort::paintGL() {
 void ViewPort::setBackgroundColor(const QColor& color) {
     mBackground = color;
     update();
-}
-
-void ViewPort::setCurrentFileName(const QString& fileName) {
-    if (mFloatingConfigPanel == nullptr) {
-        return;
-    }
-
-    mFloatingConfigPanel->setFileName(fileName);
 }
 
 void ViewPort::setMesh(const UIMesh& uiMesh) {

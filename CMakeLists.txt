@@ -44,8 +44,8 @@ qt_add_executable(MeshGenQtApp
     src/view/MeshRenderer.hpp
     src/view/ViewPort.cpp
     src/view/ViewPort.hpp
-    src/view/FloatingPanel.cpp
-    src/view/FloatingPanel.hpp
+    src/view/MeshExplorer.cpp
+    src/view/MeshExplorer.hpp
     src/view/ToolBox.cpp
     src/view/ToolBox.hpp
     src/utils/Theme.cpp
@@ -73,7 +73,7 @@ qt_add_resources(MeshGenQtApp style_resources
         res/styles/tokens.qss
         res/styles/app.qss
         res/styles/ToolBox.qss
-        res/styles/FloatingPanel.qss
+        res/styles/MeshExplorer.qss
 )
 
 qt_add_resources(MeshGenQtApp "icons"
@@ -85,6 +85,10 @@ qt_add_resources(MeshGenQtApp "icons"
         res/svg/Triangulate_24.svg
         res/svg/Rotate_CCW_24.svg
         res/svg/Rotate_CW_24.svg
+        res/svg/Chevron_24.svg
+        res/svg/Points_24.svg
+        res/svg/Constraints_24.svg
+        res/svg/Triangle_24.svg
 )
 
 target_link_libraries(MeshGenQtApp

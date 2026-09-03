@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../model/UIMesh.hpp"
-#include "FloatingPanel.hpp"
 #include "MeshRenderer.hpp"
 #include "ToolBox.hpp"
 
@@ -17,7 +16,6 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     ~ViewPort();
 
     void setBackgroundColor(const QColor& color);
-    void setCurrentFileName(const QString& fileName);
 
   protected:
     void initializeGL() override;
@@ -43,7 +41,6 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
 
     QOpenGLShaderProgram mProgram;
     MeshRenderer mMeshRenderer;
-    FloatingPanel* mFloatingConfigPanel = nullptr;
     ToolBox* mToolBox = nullptr;
 
     void setProjectionMatrix();
