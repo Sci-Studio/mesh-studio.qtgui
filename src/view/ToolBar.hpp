@@ -1,8 +1,7 @@
 #pragma once
 
 #include <QFrame>
-
-class QToolButton;
+#include <QToolButton>
 
 class ToolBar : public QFrame {
     Q_OBJECT
