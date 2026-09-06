@@ -1,0 +1,32 @@
+QFrame#ms-rotate-controls {
+    background-color: #1e2020;
+    border: 1px solid #444748b3;
+    border-radius: 8px;
+}
+
+QFrame#ms-rotate-controls-grip {
+    background-color: #4447484d;
+    border-radius: 2px;
+}
+
+QFrame#ms-rotate-controls-divider {
+    background-color: #4447484d;
+    border: 0;
+}
+
+QToolButton#ms-rotate-controls-ccw,
+QToolButton#ms-rotate-controls-cw {
+    background-color: transparent;
+    border: 0;
+    border-radius: 6px;
+}
+
+QToolButton#ms-rotate-controls-ccw:hover,
+QToolButton#ms-rotate-controls-cw:hover {
+    background-color: rgba(58, 134, 255, 45);
+}
+
+QToolButton#ms-rotate-controls-ccw:pressed,
+QToolButton#ms-rotate-controls-cw:pressed {
+    background-color: rgba(58, 134, 255, 70);
+}

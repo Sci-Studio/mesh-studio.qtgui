@@ -1,9 +1,10 @@
 #pragma once
 
 #include "../model/UIMesh.hpp"
+#include "AxisIndicator.hpp"
 #include "MeshRenderer.hpp"
+#include "RotateControls.hpp"
 #include "ToolBar.hpp"
-#include "ToolBox.hpp"
 
 #include <QColor>
 #include <QOpenGLBuffer>
@@ -34,8 +35,8 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     void triangulateRequested();
 
   private slots:
-    void setTopView();
-    void setIsoView();
+    void rotateModelCcw();
+    void rotateModelCw();
     void setGridVisible(bool visible);
 
   private:
@@ -48,9 +49,11 @@ class ViewPort : public QOpenGLWidget, protected QOpenGLFunctions {
     QOpenGLShaderProgram mProgram;
     MeshRenderer mMeshRenderer;
     ToolBar* mToolBar = nullptr;
-    ToolBox* mToolBox = nullptr;
-    bool mGridVisible = true;
+    RotateControls* mRotateControls = nullptr;
+    AxisIndicator* mAxisIndicator = nullptr;
+    bool mGridVisible = false;
     bool mGridInitialized = false;
+    float mModelRotationDegrees = 0.0f;
     std::vector<float> mGridVertices;
     QOpenGLVertexArrayObject mGridVao;
     QOpenGLBuffer mGridVbo{QOpenGLBuffer::VertexBuffer};
