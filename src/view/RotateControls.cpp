@@ -2,7 +2,6 @@
 
 #include <QFrame>
 #include <QHBoxLayout>
-#include <QToolButton>
 #include <QVBoxLayout>
 #include <QWidget>
 

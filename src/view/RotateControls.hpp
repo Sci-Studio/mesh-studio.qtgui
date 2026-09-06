@@ -1,9 +1,7 @@
 #pragma once
 
 #include <QFrame>
-
-class QFrame;
-class QToolButton;
+#include <QToolButton>
 
 class RotateControls : public QFrame {
     Q_OBJECT
