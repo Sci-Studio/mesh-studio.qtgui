@@ -1,9 +1,7 @@
 #include "RotateControls.hpp"
 
-#include <QFrame>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QWidget>
 
 RotateControls::RotateControls(QWidget* parent) : QFrame(parent) {
     setObjectName("ms-rotate-controls");
